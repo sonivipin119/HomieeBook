@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head') %> 
+
+    <!-- ✅ Custom page-specific CSS -->
+    <style>
+    </style>
+  </head>
+
+  <body class="bg-blue-100 font-sans min-h-screen flex flex-col">
+    <%- include('../partials/nav') %>
+
+    <div class="content flex-1">
+      <main class="container mx-auto p-8">
+        
+        <!-- Notification -->
+        <div class="notification" id="notification">
+          Message sent successfully! We'll get back to you soon.
+        </div>
+
+        <!-- Contact Form -->
+        <div class="bg-white p-5 mt-10 m-auto max-w-md rounded-xl shadow-md flex flex-col items-center">
+          <div class="flex flex-col w-90">
+            <h1 class="bg-blue-100 h-10 shadow-md rounded-lg flex items-center justify-center font-bold text-xl text-gray-800">
+              Contact Us
+            </h1>
+
+            <form action="/contact" method="POST" class="flex flex-col space-y-1.5 mt-2" id="contactForm">
+              <div class="flex mt-3 flex-col space-y-1.5">
+                
+                <label for="name" class="text-sm font-medium text-gray-700 ml-1">Name</label>
+                <input type="text" class="bg-gray-100 rounded-md h-8 pl-3.5 border-2 border-black" name="name" required />
+
+                <label for="email" class="text-sm font-medium text-gray-700 ml-1">Email</label>
+                <input type="email" class="bg-gray-100 rounded-md h-8 pl-3.5 border-2 border-black" name="email" required />
+
+                <label for="message" class="text-sm font-medium text-gray-700 ml-1">Message</label>
+                <textarea class="bg-gray-100 rounded-md pl-3.5 pt-1 border-2 border-black" rows="4" name="message" required></textarea>
+
+                <button type="submit"
+                  class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transform hover:scale-[1.02]">
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </main>
+    </div>
+
+    <%- include('../partials/footerTile') %>
+
+    <!-- ✅ Scripts at bottom -->
+    <script>
+      document.getElementById('contactForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const form = e.target;
+        const formData = new FormData(form);
+
+        await fetch(form.action, {
+          method: form.method,
+          body: formData,
+        });
+
+        const notification = document.getElementById('notification');
+        notification.classList.add('show');
+
+        setTimeout(() => {
+          notification.classList.remove('show');
+        }, 3000);
+
+        form.reset();
+      });
+    </script>
+  </body>
+</html>

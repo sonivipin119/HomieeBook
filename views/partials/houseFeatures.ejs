@@ -1,0 +1,39 @@
+<div class="flex flex-col mt-3 space-y-1.5 w-80">
+  <!-- Bedrooms -->
+  <input type="number" name="houseFeatures[Bedrooms]" id="Bedrooms" placeholder="Number of Bedrooms"
+    class="bg-gray-100 rounded-lg h-10 pl-3 border-2 border-black"
+    value="<%= editing && home.houseFeatures && home.houseFeatures.Bedrooms ? home.houseFeatures.Bedrooms : '' %>" min="1" />
+
+  <!-- Bathrooms -->
+  <input type="number" name="houseFeatures[Bathrooms]" id="Bathrooms" placeholder="Number of Bathrooms"
+    class="bg-gray-100 rounded-lg h-10 pl-3 border-2 border-black"
+    value="<%=editing && home.houseFeatures && home.houseFeatures.Bathrooms ? home.houseFeatures.Bathrooms : '' %>" min="1" />
+
+  <!-- Balconies -->
+  <input type="number" name="houseFeatures[Balconies]" id="Balconies" placeholder="Number of Balconies"
+    class="bg-gray-100 rounded-lg h-10 pl-3 border-2 border-black"
+    value="<%=editing && home.houseFeatures && home.houseFeatures.Balconies ? home.houseFeatures.Balconies : '' %>" min="0" />
+
+  <!-- Kitchen Type -->
+  <select name="houseFeatures[Kitchen]" id="Kitchen" class="bg-gray-100 rounded-lg h-10 pl-3 border-2 border-black">
+    <option value="" disabled selected>Select Kitchen Type</option>
+    <option value="Modular" <%=editing && home.houseFeatures && home.houseFeatures.Kitchen === 'Modular' ? 'selected' : '' %>>Modular</option>
+    <option value="Normal" <%=editing && home.houseFeatures && home.houseFeatures.Kitchen === 'Normal' ? 'selected' : '' %>>Normal</option>
+  </select>
+
+  <!-- Parking Availability -->
+  <select name="houseFeatures[Parking]" id="Parking" class="bg-gray-100 rounded-lg h-10 pl-3 border-2 border-black">
+    <option value="" disabled selected>Parking Availability</option>
+    <option value="No Parking" <%=editing && home.houseFeatures && home.houseFeatures.Parking === 'No Parking' ? 'selected' : '' %>>No Parking</option>
+    <option value="Covered Parking" <%=editing && home.houseFeatures && home.houseFeatures.Parking === 'Covered Parking' ? 'selected' : '' %>>Covered Parking</option>
+    <option value="Uncovered Parking" <%=editing && home.houseFeatures && home.houseFeatures.Parking === 'Uncovered Parking' ? 'selected' : '' %>>Uncovered Parking</option>
+  </select>
+
+  <!-- Furnishing Status -->
+  <select name="houseFeatures[Furnishing]" id="Furnishing" class="bg-gray-100 rounded-lg h-10 pl-3 border-2 border-black">
+    <option value="" disabled selected>Furnishing Status</option>
+    <option value="Fully Furnished" <%=editing && home.houseFeatures && home.houseFeatures.Furnishing === 'Fully Furnished' ? 'selected' : '' %>>Fully Furnished</option>
+    <option value="Semi Furnished" <%=editing && home.houseFeatures && home.houseFeatures.Furnishing === 'Semi Furnished' ? 'selected' : '' %>>Semi Furnished</option>
+    <option value="Unfurnished" <%=editing && home.houseFeatures && home.houseFeatures.Furnishing === 'Unfurnished' ? 'selected' : '' %>>Unfurnished</option>
+  </select>
+</div>

@@ -1,0 +1,85 @@
+<header class="bg-sky-950 text-white shadow-md">
+  <nav class="container mx-auto px-4 py-6 flex items-center justify-between">
+    <!-- Left Brand and Menu Items -->
+    <div class="flex items-center">
+      <div class="mr-9">
+        <a href="/" class="text-xl font-bold tracking-wide text-white hover:text-blue-300 transition">
+          Homiee
+        </a>
+      </div>
+
+      <!-- Left Menu Items -->
+      <ul class="flex space-x-3 text-sm font-medium items-center">
+        <% if(isLoggedIn ) { %>
+          <% if(user && user.userType === 'guest'){%>
+          <li>
+            <a href="/homes"
+              class="<%= currentPage === 'Home' ? 'bg-blue-600' : 'hover:bg-blue-500' %> py-2 px-4 rounded-lg transition duration-300">
+              Homes List
+            </a>
+          </li>
+          <li>
+            <a href="/favourite-list"
+              class="<%= currentPage === 'favourites' ? 'bg-blue-600' : 'hover:bg-blue-500' %> py-2 px-4 rounded-lg transition duration-300">
+              Favourites
+            </a>
+          </li>
+          <li>
+            <a href="/bookings"
+              class="<%= currentPage === 'bookings' ? 'bg-blue-600' : 'hover:bg-blue-500' %> py-2 px-4 rounded-lg transition duration-300">
+              Bookings
+            </a>
+          </li>
+          <li>
+            <a href="/contact"
+              class="<%= currentPage === 'contact' ? 'bg-blue-600' : 'hover:bg-blue-500' %> py-2 px-4 rounded-lg transition duration-300">
+              Contact
+            </a>
+          </li>
+          <% } else if(user && user.userType === 'host'){%>
+          <li>
+            <a href="/host/homelistpage"
+              class="<%= currentPage === 'Host-home' ? 'bg-blue-600' : 'hover:bg-blue-500' %> py-2 px-4 rounded-lg transition duration-300">
+              Host Homes
+            </a>
+          </li>
+          <li>
+            <a href="/host/add-home"
+              class="<%= currentPage === 'add-home' ? 'bg-blue-600' : 'hover:bg-blue-500' %> py-2 px-4 rounded-lg transition duration-300">
+              Add Home
+            </a>
+          </li>
+          <% } %>
+        <% } %>
+      </ul>
+    </div>
+
+    <!-- Right Menu Items (Login/Signup/Logout) -->
+    <ul class="flex space-x-3 text-sm font-medium items-center">
+      <% if(!isLoggedIn){ %>
+        <li>
+          <a href="/signUp"
+            class="<%= currentPage === 'signup' ? 'bg-blue-600' : 'hover:bg-blue-500' %> py-2 px-4 rounded-lg transition duration-300">
+            Sign Up
+          </a>
+        </li>
+        <li>
+          <a href="/Login"
+            class="<%= currentPage === 'login' ? 'bg-blue-600' : 'hover:bg-blue-500' %> py-2 px-4 rounded-lg transition duration-300">
+            Login
+          </a>
+        </li>
+      <% } else { %>
+        <li>
+          <a href="/logout" class="text-red-500 hover:text-red-600 duration-300" title="Logout">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+          </a>
+        </li>
+      <% } %>
+    </ul>
+  </nav>
+</header>

@@ -1,0 +1,43 @@
+@import "tailwindcss";
+body{
+  margin: 0;
+  align-items: center;
+  justify-content: center;display: flex;
+  flex-direction:column;
+}
+h1{
+  color:rgb(243, 239, 239);
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+header{
+  height: 200px;
+  width: 100%;
+  margin: 0px;
+  background-color: rgb(13, 52, 65);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+main{
+  height: 200px;
+  width: 100%;
+  margin: 10px;
+  background-color: rgb(28, 154, 196);
+  border-radius: 6px;
+  text-align: center;
+  align-content: center;
+}
+a{
+  color: rgb(240, 233, 233);
+  text-decoration: none;
+  /* z-index: -1; */
+  font-size: 30px;
+  letter-spacing: 4px;
+  word-spacing: 8px;
+  transition: all 0.2s ease-out;
+}
+a:hover{
+  font-size: 35px;
+  color: black;
+}

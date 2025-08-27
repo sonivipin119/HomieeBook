@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head') %> 
+
+    <!-- ✅ Custom styles (better: move to /public/css/style.css) -->
+    <style>
+    </style>
+  </head>
+
+  <body class="bg-blue-100 font-sans min-h-screen flex flex-col">
+    <%- include('../partials/nav') %>
+
+    <main class="content container mx-auto p-8 flex-1">
+      <h2 class="text-3xl text-gray-800 font-bold text-center mb-8">My Bookings</h2>
+      
+      <% if (bookings && bookings.length > 0) { %>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <% bookings.forEach(booking => { %>
+            <div class="booking-card bg-white rounded-lg shadow-md p-6">
+              <h3 class="text-xl font-semibold text-gray-800 mb-2"><%= booking.houseId.Home %></h3>
+              <p class="text-gray-600 mb-4"><%= booking.houseId.Location %></p>
+              
+              <div class="space-y-2 mb-4">
+                <div class="flex justify-between">
+                  <span class="text-gray-600">Check-in:</span>
+                  <span class="font-medium"><%= new Date(booking.checkInDate).toLocaleDateString() %></span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-600">Check-out:</span>
+                  <span class="font-medium"><%= new Date(booking.checkOutDate).toLocaleDateString() %></span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-600">Guests:</span>
+                  <span class="font-medium"><%= booking.numberOfGuests %></span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-600">Total Price:</span>
+                  <span class="font-medium text-green-600">$<%= booking.totalPrice %></span>
+                </div>
+              </div>
+              
+              <div class="border-t pt-4">
+                <span class="text-sm text-gray-500">
+                  Booked on: <%= new Date(booking.createdAt).toLocaleDateString() %>
+                </span>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <div class="text-center py-12">
+          <p class="text-gray-600 text-lg">You haven't made any bookings yet.</p>
+          <a href="/homes" 
+             class="mt-4 inline-block bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-300">
+            Browse Homes
+          </a>
+        </div>
+      <% } %>
+    </main>
+
+    <%- include('../partials/footerTile') %>
+
+    <script>
+      // Add any JavaScript functionality here if needed
+    </script>
+  </body>
+</html>

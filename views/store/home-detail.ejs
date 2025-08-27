@@ -1,0 +1,213 @@
+<%- include('../partials/head') %>
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet">
+  </head>
+  <style>
+    #calendar {
+      max-width: 100%;
+      /* Ensure it fits within the container */
+      height: 300px;
+      /* Adjust the height to match the host section */
+      margin: 0;
+      /* Center the calendar */
+      font-size: 10px;
+      /* Adjust font size */
+    }
+  </style>
+
+  <body class="bg-blue-100 font-sans min-h-screen flex flex-col">
+    <%- include('../partials/nav') %>
+      <main class="content container mx-auto p-8">
+        <h2 class="text-3xl text-sky-950 font-bold text-center mb-8">
+          <%= home.Home %>
+        </h2>
+
+        <!-- Image Gallery -->
+        <div class="grid grid-cols-2 gap-4">
+          <img src="<%= home.photo %>" alt="<%= home.Home %>" class="w-full h-64 object-cover rounded-lg">
+          <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div class="flex justify-between items-start mb-4 gap-3">
+              <h3 class="text-2xl text-sky-800 font-semibold">
+                <%= home.Home %>
+              </h3>
+              <% if(isLoggedIn){ %>
+                <%- include('../partials/favourite') %>
+                  <% } %>
+            </div>
+            <p class="text-gray-600 mb-4">
+              <%= home.Location %>
+            </p>
+            <div class="flex items-center mb-4">
+              <i class="fas fa-star text-amber-600 mr-2"></i>
+              <span class="text-gray-600">
+                <%= home.rating %> (<%= home.reviews %> reviews)
+              </span>
+            </div>
+            <p class="text-gray-700 mb-4">
+              <%= home.description %>
+            </p>
+            <span class="text-xl font-bold text-sky-600">$<%= home.Price %>/Night</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div class="md:col-span-2">
+            <!-- House Features -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+              <h4 class="text-xl text-sky-800 font-semibold mb-4">House Features</h4>
+              <ul class="grid grid-cols-2 gap-2">
+                <% Object.entries(home.houseFeatures).forEach(([key, value])=> { %>
+                  <li class="flex items-center">
+                    <i class="fas fa-check text-green-500 mr-2"></i>
+                    <strong class="pr-2">
+                      <%= key %>:
+                    </strong>
+                    <%= value %>
+                  </li>
+                  <% }) %>
+              </ul>
+            </div>
+
+            <!-- Amenities -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+              <h4 class="text-xl text-sky-800 font-semibold mb-4">Amenities</h4>
+              <ul class="grid grid-cols-2 gap-2">
+                <% home.amenities.forEach(amenity=> { %>
+                  <li class="flex items-center">
+                    <i class="fas fa-check text-green-500 mr-2"></i>
+                    <%= amenity %>
+                  </li>
+                  <% }) %>
+              </ul>
+            </div>
+
+            <!-- Reviews -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+              <h4 class="text-xl text-sky-800 font-semibold mb-4">Guest Reviews</h4>
+              <% reviews.forEach(review=> { %>
+                <div class="mb-4">
+                  <div class="flex items-center mb-2">
+                    <span class="font-semibold mr-2">
+                      <%= review.user %>
+                    </span>
+                    <span class="text-amber-600">
+                      <%= "★" .repeat(review.rating) %>
+                    </span>
+                  </div>
+                  <p class="text-gray-600">
+                    <%= review.comment %>
+                  </p>
+                </div>
+                <% }) %>
+            </div>
+          </div>
+          <div>
+            <!-- Host Information -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+              <h4 class="text-xl text-sky-800 font-semibold mb-4">Host Information</h4>
+              <p class="mb-2"><strong>Name:</strong>
+                <%= host.name %>
+              </p>
+              <p class="mb-2"><strong>Member since:</strong>
+                <%= host.joinedDate %>
+              </p>
+              <p class="mb-2"><strong>Response rate:</strong>
+                <%= host.responseRate %>
+              </p>
+              <p><strong>Response time:</strong>
+                <%= host.responseTime %>
+              </p>
+            </div>
+
+            <!-- Availability Calendar -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+              <h4 class="text-xl text-sky-800 font-semibold mb-4">Availability</h4>
+              <p class="text-sky-950 mb-2 pr-0">You can book for up to 2 months.</p>
+              <div class="m-0 w-50 h-100">
+                <div id="calendar"></div>
+              </div>
+            </div>
+          </div>
+          <!-- Booking Form -->
+          <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h4 class="text-xl text-sky-800 font-semibold mb-4">Book this place</h4>
+            <form action="/bookings" id = "bookingForm" method="POST">
+              <span id = "ErrorInDate" class="text-red-700"></span>
+              <input type="hidden" name="homeId" value="<%= home._id %>">
+              <div class="mb-4">
+                <label for="checkInDate" class="block text-gray-700 mb-2">Check-in Date</label>
+                <input type="date" id="checkInDate" name="checkInDate" class="w-full px-3 py-2 border rounded-md">
+                <span id="checkInDateError" class="text-red-500"></span>
+              </div>
+              <div class="mb-4">
+                <label for="checkOutDate" class="block text-gray-700 mb-2">Check-out Date</label>
+                <input type="date" id="checkOutDate" name="checkOutDate" class="w-full px-3 py-2 border rounded-md">
+                <span id="checkOutDateError" class="text-red-500"></span>
+              </div>
+              <div class="mb-4">
+                <label for="numberOfGuests" class="block text-gray-700 mb-2">Number of Guests</label>
+                <input type="number" id="numberOfGuests" name="numberOfGuests" min="1"
+                  class="w-full px-3 py-2 border rounded-md">
+              </div>
+              <div class="mb-4">
+                <p class="text-gray-700">Price per night: $<%= home.Price %>
+                </p>
+                <p class="text-gray-700">Total price: $<span id="totalPriceDisplay">0</span></p>
+                <input type="hidden" name="totalPrice" id="totalPrice">
+                <input type="hidden" id="pricePerNight" value="<%= home.Price %>">
+              </div>
+              <div>
+                <button type="submit" id="bookNowButton"
+                  class="w-full bg-sky-500 text-white py-2 px-4 rounded-md hover:bg-sky-600 transition duration-300">Book
+                  Now</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        </div>
+      </main>
+      <%- include('../partials/footerTile') %>
+      <!-- Load FullCalendar FIRST -->
+      <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+
+      <!-- Calendar Initialization -->
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const calendarEl = document.getElementById('calendar');
+          if (calendarEl) {
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+              initialView: 'dayGridMonth',
+              events: [
+              <% const allEvents = [...bookings, ...availableRanges ]; %>
+              <% allEvents.forEach((event, index) => { %>
+                    {
+                      title: "<%= event.title %>",
+                      start: "<%= event.start %>",
+                      end: "<%= event.end %>",
+                      color: "<%= event.color %>"
+                    } <%= index !== allEvents.length - 1 ? ',' : '' %>
+              <% }) %>
+            ]
+          });
+        calendar.render();
+  }
+});
+
+      </script>
+
+      <!-- Booking Calculation Script -->
+       <script>
+      // Expose bookings ranges to client-side JS
+        window.availableRanges = <%- JSON.stringify(availableRanges || []) %>;
+      </script>
+      <script src="/js/booking-calculation.js"></script>
+      <script>
+        document.addEventListener('DOMContentLoaded', initBookingCalculation);
+      </script>
+</body>
+
+
+      <!-- Optional Favorite Button Script -->
+      <script src="../partials/bottonfav.js"></script>
+  </body>
+
+  </html>

@@ -1,0 +1,46 @@
+<div>
+  <span class="flex items-center  font-bold text-gray-800">Amenities :</span>
+  <div class="flex flex-wrap items-center gap-4 mt-2">
+    <label class="flex items-center space-x-2">
+      <input type="checkbox" name="amenities[]" value="Wifi" class="accent-blue-600" 
+      <%=editing && home.amenities && home.amenities.includes("Wifi") ? "checked" : "" %> />
+      <span class="text-sm text-gray-700">Wifi</span>
+    </label>
+    <label class="flex items-center space-x-2">
+      <input type="checkbox" name="amenities[]" value="Air Conditioning" class="accent-blue-600" 
+      <%=editing && home.amenities && home.amenities.includes("Air Conditioning") ? "checked" : "" %> />
+      <span class="text-sm text-gray-700">Air Conditioning</span>
+    </label>
+    <label class="flex items-center space-x-2">
+      <input type="checkbox" name="amenities[]" value="TV" class="accent-blue-600"
+      <%=editing && home.amenities && home.amenities.includes("TV") ? "checked" : "" %> />
+      <span class="text-sm text-gray-700">TV</span>
+    </label>
+    <label class="flex items-center space-x-2">
+      <input type="checkbox" name="amenities[]" value="GYM" class="accent-blue-600" 
+      <%=editing && home.amenities && home.amenities.includes("GYM") ? "checked" : "" %> />
+      <span class="text-sm text-gray-700">GYM</span>
+    </label>
+    <label class="flex items-center space-x-2">
+      <input type="checkbox" name="amenities[]" value="Kids Play Area" class="accent-blue-600" 
+      <%=editing && home.amenities && home.amenities.includes("Kids Play Area") ? "checked" : "" %> />
+      <span class="text-sm text-gray-700">Kids Play Area</span>
+    </label>
+    <label class="flex items-center space-x-2">
+      <input type="checkbox" name="amenities[]" value="Garden" class="accent-blue-600"
+      <%=editing && home.amenities && home.amenities.includes("Garden") ? "checked" : "" %> />
+      <span class="text-sm text-gray-700">Garden</span>
+    </label>
+    <label class="flex items-center space-x-2">
+      <input type="checkbox" name="amenities[]" value="CCTV" class="accent-blue-600" 
+      <%=editing && home.amenities && home.amenities.includes("CCTV") ? "checked" : "" %> />
+      <span class="text-sm text-gray-700">CCTV</span>
+    </label>
+    <label class="flex items-center space-x-2">
+      <input type="checkbox" name="amenities[]" value="Swimming Pool" class="accent-blue-600"
+      <%=editing && home.amenities && home.amenities.includes("Swimming Pool") ? "checked" : "" %> />
+      <span class="text-sm text-gray-700">Swimming Pool</span>
+    </label>
+  </div>
+
+</div>

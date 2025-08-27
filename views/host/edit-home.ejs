@@ -1,0 +1,61 @@
+<%- include('../partials/head') %>
+  </head>
+  <style></style>
+
+  <body class="bg-blue-100 font-sans">
+    <%- include('../partials/nav') %>
+
+      <body class="bg-white font-sans">
+
+        <div class="bg-white p-5 mt-10 m-auto max-w-md text-center rounded-lg shadow-md flex flex-col items-center">
+          <div class="flex flex-col w-80 ">
+            <h1
+              class="bg-blue-100 h-10 shadow-md rounded-lg flex items-center justify-center font-bold text-xl  text-gray-800">
+              <%=editing ? "Edit" : "Register" %> your home here
+            </h1>
+            <main>
+              <form action="/host/<%=editing ? "edit-home" :"add-home" %>" method="POST" enctype =
+                "multipart/form-data" class="flex flex-col
+                space-y-1.5 mt-2">
+                <div class="flex mt-3 flex-col space-y-1.5">
+                  <input type="hidden" name="id" value="<%=editing?home._id:''%>" />
+                  <input type="text" class="bg-gray-100 rounded-lg h-8 pl-3.5 border-2 border-black" name="Home"
+                    value="<%=editing ? home.Home :''%>" placeholder="Enter your home here" />
+
+                  <input type="text" class="bg-gray-100 rounded-lg  h-8 pl-3.5  border-2 border-black" name="Price"
+                    value="<%=editing ? home.Price :''%>" placeholder="Price Per Night" />
+
+                  <input type="text" class="bg-gray-100 rounded-lg  h-8 pl-3.5  border-2 border-black " name="Location"
+                    value="<%=editing ? home.Location :''%>" placeholder="Enter your location here" />
+
+                  <input type="text" class="bg-gray-100 rounded-lg  h-8 pl-3.5  border-2 border-black " name="rating"
+                    value="<%=editing ? home.rating :''%>" placeholder="Rating for house" />
+
+                  <textarea class="bg-gray-100 rounded-lg pl-3.5 pt-1  border-2 border-black" name="description"
+                    placeholder="Describe your Home"><%=editing ? home.description :''%></textarea>
+
+                  <div class="relative">
+                    <label for="photo" class="block text-sm font-medium text-gray-700 mb-1">Upload Home Photo</label>
+                    <input type="file" id="photo" name="photo" accept="image/*"
+                      class="block w-full text-sm text-gray-500
+                     file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700hover:file:bg-blue-200" />
+                  </div>
+                  <div class="bg-white mt-3 flex flex-col">
+                    <span class="flex items-center  font-bold text-gray-800">House Features :</span>
+                    <%- include('../partials/houseFeatures') %>
+                  </div>
+
+                  <%- include('../partials/amenities') %>
+                </div>
+                <input type="submit" class="bg-emerald-900 w-24 h-8 rounded-lg font-mono text-white 
+            hover:scale-110 transition-transform duration-300 ease-in-out 
+            cursor-pointer" value="<%=editing ? " Update" : "Add home" %>"/>
+          </div>
+          </main>
+        </div>
+
+        <script>
+        </script>
+      </body>
+
+      </html>

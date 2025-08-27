@@ -1,0 +1,60 @@
+<%- include('../partials/head') %>
+</head>
+<style>
+  .home-card {
+      transition: transform 0.2s;
+    }
+    .home-card:hover {
+      transform: translateY(-7px);
+    }
+</style>
+<body class="bg-blue-100 font-sans min-h-screen flex flex-col">
+    <%- include('../partials/nav') %>
+
+    <main class="content container mx-auto p-8">
+      <div class="flex flex-row justify-between items-center mb-6">
+        <div class="flex flex-row">
+            <div class="text-xl text-sky-950 font-bold tracking-wide mr-1">Welcome! </div>
+            <div class="text-xl text-sky-800 font-semibold">
+              <%= user && user.FirstName ? user.FirstName.toUpperCase() : '' %>
+            </div>
+        </div>
+        <h2 class="text-3xl text-sky-950 font-bold">
+          Available Homes
+        </h2>
+        <div class="w-1/7"></div> <!-- Empty div for balance -->
+      </div>
+      <ul class="grid grid-cols-0 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <% registerHome.forEach(home => { %>
+        <li class=" home-card rounded-lg shadow-md overflow-hidden transition duration-300 hover:shadow-lg">
+          <div class="relative h-48 overflow-hidden">
+            <img src="<%= home.photo %>" alt="<%= home.Home %>" class="w-full h-full object-cover">
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-start">
+              <h3 class="text-xl text-sky-800 font-semibold mb-2"><%=home.Home%></h3>
+              <%- include('../partials/favourite',{home : home}) %>
+             
+            </div>
+            <p class="text-gray-600 mb-4"><%= home.Location %></p>
+            <div class="flex justify-between items-center">
+              <div class="flex items-center space-x-2">
+                <i class="fas fa-star cursor-pointer text-amber-600"></i>
+                <span class="text-gray-600"><%= home.rating %><%= home.reviews %></span>
+              </div>
+              <span class="text-l font-bold text-sky-600">$<%= home.Price %>/Night</span>
+            </div>
+          </div>
+          <a href="/homes/<%= home._id%>" class="block bg-sky-500 text-white text-center py-3 font-semibold hover:bg-sky-600 transition duration-300">
+           View Details
+          </a>
+        </li>
+        <% }) %>
+      </ul>
+    </main>
+
+    <%- include('../partials/footerTile') %>
+    <script src = "../partials/bottonfav.js"></script>
+    
+  </body>
+</html>
