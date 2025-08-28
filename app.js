@@ -4,7 +4,7 @@ const multer = require('multer');
 const session = require('express-session');
 const mongodbStore = require('connect-mongodb-session')(session);
 require('dotenv').config();
-const Db_path = process.env.Db_path;
+const DB_PATH = process.env.DB_PATH;
 const authcontroller = require("./controllers/auth");
 const passport = require('passport');
 const GoogleStartegy = require("passport-google-oauth20").Strategy;
@@ -23,7 +23,7 @@ app.use((req, res, next) => {
   next();
 });
 const store = new mongodbStore({
-  uri : Db_path,
+  uri : DB_PATH,
   collection : 'session'
 })
 
@@ -118,7 +118,7 @@ const PORT = 3005;
 
 
 
-mongoose.connect(Db_path).then(()=>{
+mongoose.connect(DB_PATH).then(()=>{
   console.log("Connected to MongoDB")
   app.listen(PORT, () => {
     console.log(`Server running on address http://localhost:${PORT}`);
