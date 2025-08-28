@@ -35,6 +35,11 @@ jobs:
           echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> $GITHUB_ENV
           echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> $GITHUB_ENV
           echo "DB_PATH=${{ secrets.Db_path }}" >> $GITHUB_ENV
+      - name: Debug secrets
+        run: |
+          echo "GOOGLE_CLIENT_ID is set? ${GOOGLE_CLIENT_ID:+YES}"
+          echo "GOOGLE_CLIENT_SECRET is set? ${GOOGLE_CLIENT_SECRET:+YES}"
+          echo "DB_PATH is set? ${DB_PATH:+YES}"
 
       - name: Run app
         run: npm start
