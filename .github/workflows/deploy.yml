@@ -30,11 +30,18 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      # Inject secrets into workflow environment
       - name: Set environment variables from GitHub Secrets
+        env:
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          DB_PATH: ${{ secrets.DB_PATH }}
         run: |
-          echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> $GITHUB_ENV
-          echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> $GITHUB_ENV
-          echo "DB_PATH=${{ secrets.DB_PATH }}" >> $GITHUB_ENV
+          echo "GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}" >> $GITHUB_ENV
+          echo "GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}" >> $GITHUB_ENV
+          echo "DB_PATH=${DB_PATH}" >> $GITHUB_ENV
+
+      # Debug secrets
       - name: Debug secrets
         run: |
           echo "GOOGLE_CLIENT_ID is set? ${GOOGLE_CLIENT_ID:+YES}"
