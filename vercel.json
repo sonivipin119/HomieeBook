@@ -1,23 +1,9 @@
 {
   "version": 2,
   "builds": [
-    {
-      "src": "app.js",
-      "use": "@vercel/node"
-    }
+    { "src": "app.js", "use": "@vercel/node" }
   ],
-  "build": {
-    "env": {
-      "NODE_ENV": "production"
-    }
-  },
-  "scripts": {
-    "postinstall": "npm run build:css"
-  },
   "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "app.js"
-    }
+    { "src": "/(.*)", "dest": "app.js" }
   ]
 }
