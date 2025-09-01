@@ -113,7 +113,12 @@ passport.use(
     authcontroller.SocialLoginVerify
   )
 );
+console.log("Google OAuth Callback URL:", callbackURL);
+console.log("Google Client ID:", process.env.GOOGLE_CLIENT_ID);
+console.log("Client ID length:", process.env.GOOGLE_CLIENT_ID.length);
 
+console.log("Google Client Secret:", process.env.GOOGLE_CLIENT_SECRET);
+console.log("ClientSecret:", process.env.GOOGLE_CLIENT_SECRET ? "Loaded" : "Missing");
 passport.serializeUser((user, done) => done(null, user._id));
 passport.deserializeUser(async (id, done) => {
   try {
