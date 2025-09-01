@@ -30,15 +30,15 @@
               <div class="flex mt-3 flex-col space-y-1.5">
                 
                 <label for="name" class="text-sm font-medium text-gray-700 ml-1">Name</label>
-                <input type="text" class="bg-gray-100 rounded-md h-8 pl-3.5 border-2 border-black" name="name" required />
+                <input type="text" name="name" class="bg-gray-100 rounded-md h-8 pl-3.5 border-2 border-black" name="name" required />
 
                 <label for="email" class="text-sm font-medium text-gray-700 ml-1">Email</label>
-                <input type="email" class="bg-gray-100 rounded-md h-8 pl-3.5 border-2 border-black" name="email" required />
+                <input type="email" name="email" class="bg-gray-100 rounded-md h-8 pl-3.5 border-2 border-black" name="email" required />
 
                 <label for="message" class="text-sm font-medium text-gray-700 ml-1">Message</label>
-                <textarea class="bg-gray-100 rounded-md pl-3.5 pt-1 border-2 border-black" rows="4" name="message" required></textarea>
+                <textarea name="message" class="bg-gray-100 rounded-md pl-3.5 pt-1 border-2 border-black" rows="4" name="message" required></textarea>
 
-                <button type="submit"
+                <button type="submit" name="submit" value="Send"
                   class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transform hover:scale-[1.02]">
                   Submit
                 </button>
@@ -74,6 +74,34 @@
 
         form.reset();
       });
+    </script>
+    <!-- sending email -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+        (function() {
+            // https://dashboard.emailjs.com/admin/account
+            emailjs.init({
+              publicKey: "9dOmKc2D8Y54fky7K",
+            });
+        })();
+    </script>
+    <script type="text/javascript">
+      window.onload = function() {
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+          event.preventDefault();
+          // these IDs from the previous steps
+          emailjs.sendForm('service_7rrhsbq', 'template_yfm5g0b', this)
+          .then(() => {
+              console.log('SUCCESS!');
+              window.location.reload();
+          }, (error) => {
+              console.log('FAILED...', error);
+          });
+        });
+      }
     </script>
   </body>
 </html>
