@@ -17,7 +17,7 @@ const authcontroller = require("./controllers/auth");
 const storerouter = require("./routes/storerouter");
 const hostrouter = require("./routes/hostrouter");
 const authrouter = require("./routes/authrouter");
-const { error404, error500 } = require("./controllers/error");
+const { error404} = require("./controllers/error");
 const User = require("./models/user");
 const root = require("./utils/pathutills");
 
@@ -150,7 +150,7 @@ app.get('/test-500', (req, res, next) => {
 });
 // console.error("500 handler triggered:", err);
 app.use(error404);
-app.use(error500);
+// app.use(error500);
 
 // MongoDB Connection
 mongoose
