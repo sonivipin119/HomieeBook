@@ -7,7 +7,7 @@ exports.error404 =(req, res, next) => {
   });
 }
 exports.error500 = (err, req, res, next) => {
-  res.status(500).render("500", {
+  res.status(500).render('500', {
     pageTitle: "Server Error",
     currentPage: '500',
     isLoggedIn: req.isLoggedIn,
