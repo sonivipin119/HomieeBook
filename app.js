@@ -126,13 +126,12 @@ const PORT = process.env.PORT || 3005;
 
 
 
-mongoose.connect(DB_PATH).then(()=>{
-  console.log("Connected to MongoDB")
-  app.listen(PORT, () => {
-    console.log(`Server running on address http://localhost:${PORT}`);
+mongoose.connect(DB_PATH)
+  .then(() => {
+    console.log("✅ Connected to MongoDB");
+  })
+  .catch(err => {
+    console.error(" Error while connecting to MongoDB:", err);
   });
-}).catch(err=>{
-    console.log("error while connecting to MongoDB" , err)
-})
 
-
+module.exports = app;
