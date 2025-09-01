@@ -9,7 +9,7 @@ exports.getIndex = (req, res, next) => {
   Homigister.find().then((registerHome) => {
     res.render("store/index", {
       registerHome: registerHome,
-      pageTitle: "Airbnb Home",
+      pageTitle: "HomieeBook",
       currentPage: "Index",
       isLoggedIn: req.isLoggedIn,
       user: user,

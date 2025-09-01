@@ -13,8 +13,11 @@ const Hostrouter = require("./routes/hostrouter");
 const authrouter = require("./routes/authrouter")
 const root = require("./utils/pathutills");
 const User = require("./models/user");
-const { error404 } = require("./controllers/error");
+const { error404,error500 } = require("./controllers/error");
 const {default : mongoose} = require('mongoose');
+const morgan = require("morgan");
+const helmet = require("helmet");
+const compression = require("compression");
 const app = express();
 
 app.set("view engine", "ejs");
@@ -56,6 +59,9 @@ const storage = multer.diskStorage({
 const multerOpt = {
  storage,fileFilter,
 };
+app.use(helmet());       // secure headers
+app.use(compression()); 
+app.use(morgan("combined"));
 app.use(express.urlencoded());
 app.use(multer(multerOpt).single('photo'));
 
@@ -98,6 +104,7 @@ passport.deserializeUser(async (id, done) => {
     done(err, null);
   }
 });
+
 app.use(authrouter);
 app.use(storerouter);
 app.use("/host",(req, res, next)=>{ 
@@ -113,7 +120,8 @@ app.use("/host",Hostrouter);
 
 
 app.use(error404);
-const PORT = 3005;
+app.use(error500);
+const PORT = process.env.PORT || 3005;
 
 
 

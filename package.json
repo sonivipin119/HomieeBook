@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "tailwind": "tailwindcss -i ./views/input.css -o ./public/output.css --watch",
-    "server": "nodemon app.js",
-    "start": "concurrently \"npm run server\" \"npm run tailwind\""
-  },
+  "server": "nodemon app.js",
+  "tailwind": "tailwindcss -i ./views/input.css -o ./public/output.css --watch",
+  "dev": "concurrently \"npm run server\" \"npm run tailwind\"",
+  "build:css": "tailwindcss -i ./views/input.css -o ./public/output.css --minify",
+  "start": "node app.js"
+},
+
+
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -15,14 +19,17 @@
     "@tailwindcss/vite": "^4.0.6",
     "bcryptjs": "^3.0.2",
     "body-parser": "^1.20.3",
+    "compression": "^1.8.1",
     "connect-mongodb-session": "^5.0.0",
     "dotenv": "^16.5.0",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "express-session": "^1.18.1",
     "express-validator": "^7.2.1",
+    "helmet": "^8.1.0",
     "mongodb": "^6.15.0",
     "mongoose": "^8.13.1",
+    "morgan": "^1.10.1",
     "multer": "^1.4.5-lts.2",
     "mysql2": "^3.14.0",
     "nodemon": "^3.1.9",
