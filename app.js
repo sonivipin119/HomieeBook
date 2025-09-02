@@ -59,7 +59,7 @@ app.use(
           "https://cdn.jsdelivr.net",
         ],
         imgSrc: ["'self'", "data:", "https://res.cloudinary.com"],
-        connectSrc: ["'self'"],
+        connectSrc: ["'self'", "https://api.emailjs.com"],
         fontSrc: [
           "'self'",
           "https://cdnjs.cloudflare.com",
