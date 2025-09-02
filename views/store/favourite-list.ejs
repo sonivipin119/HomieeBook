@@ -21,7 +21,7 @@
         <% favHome.forEach(home => { %>
         <li class="home-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 hover:shadow-lg">
           <div class="relative h-48 overflow-hidden">
-            <img src="<%= home.photo %>" alt="<%= home.Home %>" class="w-full h-full object-cover">
+            <img src="<%= home.photo.url %>" alt="<%= home.Home %>" class="w-full h-full object-cover">
           </div>
           <div class="p-4">
             <div class="flex justify-between items-start">

@@ -42,8 +42,23 @@ app.use(
         defaultSrc: ["'self'"],
         imgSrc: ["'self'", "data:", "https://res.cloudinary.com"],
         scriptSrc: ["'self'", "https://cdnjs.cloudflare.com", "https://cdn.jsdelivr.net"],
-        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-        fontSrc: ["'self'", "https://fonts.gstatic.com"],
+        styleSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          "https://cdnjs.cloudflare.com",
+          "https://fonts.googleapis.com"
+        ],
+        styleSrcElem: [
+          "'self'",
+          "'unsafe-inline'",
+          "https://cdnjs.cloudflare.com",
+          "https://fonts.googleapis.com"
+        ],
+        fontSrc: [
+          "'self'",
+          "https://cdnjs.cloudflare.com",
+          "https://fonts.googleapis.com"
+        ],
       },
     },
   })
@@ -119,7 +134,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Google OAuth Config ✅ dynamic callback
+// Google OAuth Config .. dynamic callback
 const callbackURL =
   process.env.NODE_ENV === "production"
     ? "https://your-project-name.vercel.app/auth/google/callback"
@@ -178,13 +193,13 @@ app.use(error500);
 mongoose
   .connect(DB_PATH)
   .then(() => {
-    console.log("✅ Connected to MongoDB");
+    console.log(" Connected to MongoDB");
     if (process.env.NODE_ENV !== "production") {
       app.listen(PORT, () =>
         console.log(`🚀 Server running at http://localhost:${PORT}`)
       );
     }
   })
-  .catch((err) => console.error("❌ MongoDB Connection Error:", err));
+  .catch((err) => console.error(" MongoDB Connection Error:", err));
 
 module.exports = app;
