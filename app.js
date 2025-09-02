@@ -29,8 +29,8 @@ const SESSION_SECRET = process.env.SESSION_SECRET || "fallback_secret";
 // Init App
 const app = express();
 app.set("view engine", "ejs");
-app.set("views", "views");
-
+app.set("views", path.join(__dirname, "views"))
+// app.set("views", "views");
 // Middlewares
 app.use(helmet());
 app.use(compression());
