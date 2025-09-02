@@ -25,9 +25,10 @@
         <ul class="grid grid-cols-0 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <% registerHome.forEach(home=> { %>
             <li class="home-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 hover:shadow-lg">
-              <div class="relative h-48 overflow-hidden">
-                <img src="<%= home.photo %>" alt="<%= home.Home %>" class="w-full h-full object-cover">
+              <div class="relative overflow-hidden">
+                <img src="<%= home.photo.url %>" alt="<%= home.Home %>" class="w-full h-48 object-cover">
               </div>
+
               <div class="p-6">
                 <div class="flex justify-between items-start">
                   <h3 class="text-xl text-sky-800 font-semibold mb-2">
@@ -64,7 +65,6 @@
         </ul>
       </main>
       <%- include('../partials/footerTile') %>
-      <script></script>
   </body>
 
   </html>

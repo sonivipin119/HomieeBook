@@ -8,8 +8,9 @@ exports.error404 =(req, res, next) => {
 }
 exports.error500 = (err, req, res, next) => {
   console.error("SERVER ERROR:", err);
-  res.status(500).render("500", {
-    pageTitle: "Error!",
+  res.status(500).render('500', {
+    pageTitle: "Server Error",
+    currentPage: '500',
     isLoggedIn: req.isLoggedIn || false,
     user: req.session ? req.session.user : null,
   });

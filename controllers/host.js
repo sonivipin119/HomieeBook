@@ -46,15 +46,10 @@ exports.getHostHomes = (req, res, next) => {
 exports.postAddhome = async (req, res, next) => {
   try {
     const { Home, Price, Location, rating, description, amenities, houseFeatures } = req.body;
-
+    console.log("File uploaded:", req.file)
     if (!req.file) {
       return res.status(400).send("No image provided");
     }
-
-    // Upload to Cloudinary
-    const result = await cloudinary.uploader.upload(req.file.path, {
-      folder: "homes",
-    });
 
     const home = new Homigister({
       Home,
@@ -62,23 +57,23 @@ exports.postAddhome = async (req, res, next) => {
       Location,
       rating,
       photo: {
-        url: result.secure_url,
-        public_id: result.public_id,
+        url: req.file.path,        //  secure Cloudinary URL
+        public_id: req.file.filename, // Cloudinary public_id
       },
       description,
       amenities,
       houseFeatures,
     });
 
-      await home.save()
-      .then(() => res.redirect("/host/homelistpage"))
-      .catch(err => next(err));
+    await home.save();
     console.log("Home added successfully");
+    res.redirect("/host/homelistpage");
   } catch (err) {
-    console.log("Error while adding home:", err);
+    console.error("Error while adding home:", err);
     res.status(500).send("Something went wrong");
   }
 };
+
 
 exports.postEdithome = async (req, res, next) => {
   try {
