@@ -141,10 +141,6 @@ app.use("/host", (req, res, next) => {
   }
 });
 app.use("/host", hostrouter);
-
-// Error Handlers
-
-// This route will throw an error intentionally
 app.get('/test-500', (req, res, next) => {
   const error = new Error("This is a test server error!");
   next(error); // Pass the error to the error handling middleware
