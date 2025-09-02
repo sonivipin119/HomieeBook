@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-  "server": "nodemon server.js",                  
+  "server": "nodemon app.js",                  
   "tailwind": "tailwindcss -i ./views/input.css -o ./public/output.css --watch",
-  "dev": "concurrently \"npm run server\" \"npm run tailwind\"",
+  "dev": "concurrently \"npm run app\" \"npm run tailwind\"",
   "build:css": "tailwindcss -i ./views/input.css -o ./public/output.css --minify",
-  "start": "node server.js"  
+  "start": "node app.js"  
 }
 ,
 
