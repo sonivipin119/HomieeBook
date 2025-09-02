@@ -5,6 +5,7 @@
   "scripts": {
     "server": "nodemon app.js",
     "tailwind": "tailwindcss -i ./views/input.css -o ./public/output.css --watch",
+    "dev": "concurrently \"npm run app\" \"npm run tailwind\"",
     "build:css": "tailwindcss -i ./views/input.css -o ./public/output.css --minify",
     "vercel-build": "npm run build:css",
     "start": "node app.js"
