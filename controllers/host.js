@@ -70,9 +70,10 @@ exports.postAddhome = async (req, res, next) => {
       houseFeatures,
     });
 
-    await home.save();
-    console.log("Home saved successfully");
-    res.redirect("/host/homelistpage");
+      await home.save()
+      .then(() => res.redirect("/host/homelistpage"))
+      .catch(err => next(err));
+    console.log("Home added successfully");
   } catch (err) {
     console.log("Error while adding home:", err);
     res.status(500).send("Something went wrong");

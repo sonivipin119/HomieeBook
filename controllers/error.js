@@ -7,12 +7,11 @@ exports.error404 =(req, res, next) => {
   });
 }
 exports.error500 = (err, req, res, next) => {
-  console.error("500 handler triggered:", err.message);
-  res.status(500).render('500',{
-    pageTitle : "Error occurred",
-    currentPage : '500',
-    isLoggedIn : req.isLoggedIn,
-    user : req.session.user,
+  console.error("SERVER ERROR:", err);
+  res.status(500).render("500", {
+    pageTitle: "Error!",
+    isLoggedIn: req.isLoggedIn || false,
+    user: req.session ? req.session.user : null,
   });
 };
 
