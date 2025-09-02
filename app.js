@@ -31,10 +31,6 @@ const app = express();
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "views"))
-// app.set("views", "views");
-// Middlewares
-
-// Helmet with custom Content Security Policy
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -74,39 +70,7 @@ app.use(compression());
 app.use(morgan("combined"));
 app.use(express.urlencoded({ extended: true })); // ✅ fixed
 app.use(express.json());
-
-// File Upload Config
-// const randomString = (length) => {
-//   const chars = "abcdefghijklmnopqrstuvwxyz";
-//   return Array.from({ length }, () =>
-//     chars.charAt(Math.floor(Math.random() * chars.length))
-//   ).join("");
-// };
-
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => cb(null, "uploads/"),
-//   filename: (req, file, cb) =>
-//     cb(null, randomString(10) + "-" + file.originalname),
-// });
-
-// const fileFilter = (req, file, cb) => {
-//   if (
-//     file.mimetype === "image/png" ||
-//     file.mimetype === "image/jpg" ||
-//     file.mimetype === "image/jpeg"
-//   ) {
-//     cb(null, true);
-//   } else {
-//     cb(null, false);
-//   }
-// };
-// app.use(multer({ storage, fileFilter }).single("photo"));
-
-// Static Files
 app.use(express.static(path.join(root, "public")));
-// app.use("/uploads", express.static(path.join(root, "uploads")));
-// app.use("/host/uploads", express.static(path.join(root, "uploads")));
-// app.use("/homes/uploads", express.static(path.join(root, "uploads")));
 
 // Sessions
 const store = new MongoDBStore({
