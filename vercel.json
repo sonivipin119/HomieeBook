@@ -4,17 +4,13 @@
     { "src": "app.js", "use": "@vercel/node" }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "app.js" }
-  ],
-  "headers": [
     {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Content-Security-Policy",
-          "value": "default-src 'self'; img-src 'self' data: https://res.cloudinary.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;"
-        }
-      ]
+      "src": "/(.*)",
+      "dest": "app.js",
+      "headers": {
+        "Content-Security-Policy": "default-src 'self'; img-src 'self' data: https://res.cloudinary.com; style-src 'self' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com;"
+
+      }
     }
   ]
 }

@@ -33,17 +33,28 @@ app.use(express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "views"))
 // app.set("views", "views");
 // Middlewares
+
+// Helmet with custom Content Security Policy
 app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-      fontSrc: ["'self'", "https://fonts.gstatic.com"],
-      imgSrc: ["'self'", "data:", "https://res.cloudinary.com"],
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        imgSrc: ["'self'", "data:", "https://res.cloudinary.com"],
+        scriptSrc: ["'self'", "https://cdnjs.cloudflare.com", "https://cdn.jsdelivr.net"],
+        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+        fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      },
     },
   })
 );
+
+// Your other middlewares
+app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
+
+// Routes...
+
 app.use(compression());
 app.use(morgan("combined"));
 app.use(express.urlencoded({ extended: true })); // ✅ fixed
