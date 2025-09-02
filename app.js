@@ -29,6 +29,7 @@ const SESSION_SECRET = process.env.SESSION_SECRET || "fallback_secret";
 // Init App
 const app = express();
 app.set("view engine", "ejs");
+app.use(express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "views"))
 // app.set("views", "views");
 // Middlewares
