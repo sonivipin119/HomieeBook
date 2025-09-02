@@ -1,7 +1,6 @@
 // app.js
 const express = require("express");
 const path = require("path");
-const multer = require("multer");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 require("dotenv").config();
@@ -17,9 +16,8 @@ const authcontroller = require("./controllers/auth");
 const storerouter = require("./routes/storerouter");
 const hostrouter = require("./routes/hostrouter");
 const authrouter = require("./routes/authrouter");
-const { error404, error500} = require("./controllers/error");
+const { error404, error500 } = require("./controllers/error");
 const User = require("./models/user");
-const root = require("./utils/pathutills");
 
 // Env Vars
 const DB_PATH = process.env.DB_PATH;
@@ -29,48 +27,57 @@ const SESSION_SECRET = process.env.SESSION_SECRET || "fallback_secret";
 // Init App
 const app = express();
 app.set("view engine", "ejs");
-app.use(express.static(path.join(__dirname, "public")));
-app.set("views", path.join(__dirname, "views"))
+app.set("views", path.join(__dirname, "views"));
+
+// Serve Static Files
+app.use(express.static(path.join(__dirname, "public"))); // Only one static folder
+
+// Helmet + CSP
 app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        imgSrc: ["'self'", "data:", "https://res.cloudinary.com"],
-        scriptSrc: ["'self'", "https://cdnjs.cloudflare.com", "https://cdn.jsdelivr.net"],
+        scriptSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          "https://cdnjs.cloudflare.com",
+          "https://cdn.jsdelivr.net",
+        ],
         styleSrc: [
           "'self'",
           "'unsafe-inline'",
           "https://cdnjs.cloudflare.com",
-          "https://fonts.googleapis.com"
+          "https://fonts.googleapis.com",
+          "https://cdn.jsdelivr.net",
         ],
         styleSrcElem: [
           "'self'",
           "'unsafe-inline'",
           "https://cdnjs.cloudflare.com",
-          "https://fonts.googleapis.com"
+          "https://fonts.googleapis.com",
+          "https://cdn.jsdelivr.net",
         ],
+        imgSrc: ["'self'", "data:", "https://res.cloudinary.com"],
+        connectSrc: ["'self'"],
         fontSrc: [
           "'self'",
           "https://cdnjs.cloudflare.com",
-          "https://fonts.googleapis.com"
+          "https://fonts.googleapis.com",
+          "data:",
         ],
+        objectSrc: ["'none'"],
+        frameSrc: ["'none'"],
       },
     },
   })
 );
 
-// Your other middlewares
-app.use(express.static("public"));
-app.use(express.urlencoded({ extended: true }));
-
-// Routes...
-
+// Middlewares
 app.use(compression());
 app.use(morgan("combined"));
-app.use(express.urlencoded({ extended: true })); // ✅ fixed
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static(path.join(root, "public")));
 
 // Sessions
 const store = new MongoDBStore({
@@ -98,7 +105,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Google OAuth Config .. dynamic callback
+// Google OAuth Config
 const callbackURL =
   process.env.NODE_ENV === "production"
     ? "https://your-project-name.vercel.app/auth/google/callback"
@@ -114,6 +121,7 @@ passport.use(
     authcontroller.SocialLoginVerify
   )
 );
+
 passport.serializeUser((user, done) => done(null, user._id));
 passport.deserializeUser(async (id, done) => {
   try {
@@ -127,6 +135,8 @@ passport.deserializeUser(async (id, done) => {
 // Routes
 app.use(authrouter);
 app.use(storerouter);
+
+// Host routes with authentication
 app.use("/host", (req, res, next) => {
   if (req.isLoggedIn) {
     next();
@@ -135,11 +145,14 @@ app.use("/host", (req, res, next) => {
   }
 });
 app.use("/host", hostrouter);
-app.get('/test-500', (req, res, next) => {
+
+// Test route for 500
+app.get("/test-500", (req, res, next) => {
   const error = new Error("This is a test server error!");
-  next(error); // Pass the error to the error handling middleware
+  next(error);
 });
-// console.error("500 handler triggered:", err);
+
+// Error Handlers
 app.use(error404);
 app.use(error500);
 
@@ -147,13 +160,13 @@ app.use(error500);
 mongoose
   .connect(DB_PATH)
   .then(() => {
-    console.log(" Connected to MongoDB");
+    console.log("✅ Connected to MongoDB");
     if (process.env.NODE_ENV !== "production") {
       app.listen(PORT, () =>
         console.log(`🚀 Server running at http://localhost:${PORT}`)
       );
     }
   })
-  .catch((err) => console.error(" MongoDB Connection Error:", err));
+  .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
 module.exports = app;
