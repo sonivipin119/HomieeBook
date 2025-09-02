@@ -150,7 +150,7 @@ app.get('/test-500', (req, res, next) => {
 });
 // console.error("500 handler triggered:", err);
 app.use(error404);
-// app.use(error500);
+app.use(error500);
 
 // MongoDB Connection
 mongoose

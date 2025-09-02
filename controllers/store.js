@@ -86,8 +86,6 @@ exports.postRemovefromfavouritelist = async (req, res, next) => {
 exports.getHomeDetail = async (req, res, next) => {
   const user = req.user || req.session.user;
   const homeId = req.params.homeId;
-   
- 
   const today = new Date();// Set to start of today
 
   const nextDate = new Date();
