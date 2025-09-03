@@ -1,117 +1,136 @@
 <%- include('../partials/head') %>
-</head>
-<style>
-  .blur-lg {
-    filter: blur(5px);
-  }
-</style>
-<body class="bg-gray-100 min-h-screen font-sans">
-  <div style="background-color: rgb(9, 66, 86);"><%- include('../partials/nav') %></div>
-  <div class="flex items-center justify-center min-h-screen px-4">
-  <center id="mainBlock">
-  <div class="bg-white w-full max-w-md p-6 rounded-2xl shadow-lg space-y-2">
-    <div class="text-center">
-      <h1 class="text-3xl font-bold text-gray-800">Create Your Account</h1>
-      <p class="text-sm text-gray-500 mt-1">Join us and get started right away</p>
+  </head>
+  <style>
+    .hidden{
+      display: none;
+    }
+    .blur-lg {
+      filter: blur(5px);
+    }
+  </style>
+
+  <body class="bg-gray-100 min-h-screen font-sans">
+    <div style="background-color: rgb(9, 66, 86);"><%- include('../partials/nav') %></div>
+    <div class="flex items-center justify-center min-h-screen px-4">
+      <center id="mainBlock">
+        <div class="bg-white w-full max-w-md p-6 rounded-2xl shadow-lg space-y-2">
+          <div class="text-center">
+            <h1 class="text-3xl font-bold text-gray-800">Create Your Account</h1>
+            <p class="text-sm text-gray-500 mt-1">Join us and get started right away</p>
+          </div>
+
+          <form action="/signUp" method="POST" class="space-y-5">
+            <!-- First & Last Name -->
+            <%- include('../partials/errorInLogin') %>
+
+              <div class="flex space-x-3">
+                <input type="text" name="FirstName" placeholder="First Name"
+                  value="<%= oldInput.FirstName ? oldInput.FirstName : "" %>"
+                  class="w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required />
+                <input type="text" name="LastName" placeholder="Last Name"
+                  value="<%= oldInput.LastName ? oldInput.LastName : "" %>"
+                  class="w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required />
+              </div>
+              <!-- User Name -->
+              <input type="text" name="UserName" placeholder="User Name"
+                value="<%= oldInput.UserName ? oldInput.UserName : "" %>"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required />
+              <!-- Email -->
+              <input type="email" name="email" placeholder="Email address"
+                value="<%= oldInput.email ? oldInput.email : "" %>"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required />
+
+              <!-- Password -->
+              <input type="password" name="password" placeholder="Password"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required />
+
+              <!-- Confirm Password -->
+              <input type="password" name="Conpassword" placeholder="Confirm Password"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required />
+
+              <!-- User Type -->
+              <div class="flex items-center space-x-4">
+                <label class="text-gray-700 font-medium">User Type:</label>
+                <label class="flex items-center space-x-2">
+                  <input type="radio" name="userType" value="guest" class="accent-blue-600" <%=!oldInput.userType ||
+                    oldInput.userType==="guest" ? "checked" : "" %> />
+                  <span class="text-sm text-gray-700">Guest</span>
+                </label>
+                <label class="flex items-center space-x-2">
+                  <input type="radio" name="userType" value="host" class="accent-blue-600" <%=oldInput.userType==="host"
+                    ? "checked" : "" %>/>
+                  <span class="text-sm text-gray-700">Host</span>
+                </label>
+              </div>
+
+              <!-- Terms -->
+              <label class="flex items-start space-x-2">
+                <input type="checkbox" name="terms" required class="accent-blue-600 mt-1" />
+                <span class="text-sm text-gray-600">I agree to the <a href="javascript:void(0)" id="openTermsLink" 
+                    class="text-blue-600 hover:underline">Terms and Condition.</a>.
+                </span>
+              </label>
+
+              <!-- Submit Button -->
+              <button type="submit"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition duration-300">
+                Sign Up
+              </button>
+          </form>
+          <!-- Google Login -->
+          <!-- Already have an account -->
+          <p class="text-center text-sm text-gray-500">
+            Already have an account?
+            <a href="/login" class="text-blue-600 hover:underline font-medium">Log In</a>
+          </p>
+
+      </center>
+
+      <div id="termBlock" class="hidden fixed mt-0 bg-black bg-opacity-60 items-center justify-center z-50"
+        style="top: 120px;">
+        <div class="bg-sky-950 w-full max-w-2xl p-6 rounded-2xl relative text-white overflow-y-auto">
+          <h2 class="text-2xl font-bold mb-4">Terms & Conditions</h2>
+          <%- include('../terms/termCondition') %>
+            <div class="flex justify-center mb-5">
+              <button id="closeTermsBtn"  class="absolute top-4 border-2 font-extrabold rounded-full"
+                style="padding: 3px;">✖</button>
+            </div>
+        </div>
+      </div>
     </div>
 
-    <form action="/signUp" method="POST" class="space-y-5">
-      <!-- First & Last Name -->
-       <%- include('../partials/errorInLogin') %>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const termBlock = document.getElementById("termBlock");
+        const mainBlock = document.getElementById("mainBlock");
+        const openLink = document.getElementById("openTermsLink");
+        const closeBtn = document.getElementById("closeTermsBtn");
 
-      <div class="flex space-x-3">
-        <input type="text" name="FirstName" placeholder="First Name"
-        value="<%= oldInput.FirstName ? oldInput.FirstName : "" %>"
-          class="w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required />
-        <input type="text" name="LastName" placeholder="Last Name"
-        value="<%= oldInput.LastName ? oldInput.LastName : "" %>"
-          class="w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required />
-      </div>
-      <!-- User Name -->
-      <input type="text" name="UserName" placeholder="User Name"
-      value="<%= oldInput.UserName ? oldInput.UserName : "" %>"
-        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required />
-      <!-- Email -->
-      <input type="email" name="email" placeholder="Email address"
-      value="<%= oldInput.email ? oldInput.email : "" %>"
-        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+        function openTerms() {
+          mainBlock.classList.add("blur-lg");
+          termBlock.classList.remove("hidden");
+          mainBlock.style.pointerEvents = "none";
+        }
 
-      <!-- Password -->
-      <input type="password" name="password" placeholder="Password"
-        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+        function closeTerms() {
+          mainBlock.classList.remove("blur-lg");
+          termBlock.classList.add("hidden");
+          mainBlock.style.pointerEvents = "";
+        }
 
-      <!-- Confirm Password -->
-      <input type="password" name="Conpassword" placeholder="Confirm Password"
-        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+        // attach listeners
+        openLink.addEventListener("click", openTerms);
+        closeBtn.addEventListener("click", closeTerms);
+      });
+    </script>
 
-      <!-- User Type -->
-      <div class="flex items-center space-x-4">
-        <label class="text-gray-700 font-medium">User Type:</label>
-        <label class="flex items-center space-x-2">
-          <input type="radio" name="userType" value="guest" class="accent-blue-600" 
-          <%= !oldInput.userType || oldInput.userType === "guest" ? "checked" : "" %> />
-          <span class="text-sm text-gray-700">Guest</span>
-        </label>
-        <label class="flex items-center space-x-2">
-          <input type="radio" name="userType" value="host" class="accent-blue-600" 
-          <%= oldInput.userType === "host" ? "checked" : "" %>/>
-          <span class="text-sm text-gray-700">Host</span>
-        </label>
-      </div>
 
-      <!-- Terms -->
-      <label class="flex items-start space-x-2">
-        <input type="checkbox" name="terms" required class="accent-blue-600 mt-1" />
-        <span class="text-sm text-gray-600">I agree to the  <a href="javascript:void(0)" onclick="openTerms()" class="text-blue-600 hover:underline">Terms and Condition.</a>.
-        </span>
-      </label>
+  </body>
 
-      <!-- Submit Button -->
-      <button type="submit"
-        class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition duration-300">
-        Sign Up
-      </button>
-    </form>
-    <!-- Google Login -->
-    <!-- Already have an account -->
-    <p class="text-center text-sm text-gray-500">
-      Already have an account?
-      <a href="/login" class="text-blue-600 hover:underline font-medium">Log In</a>
-    </p>
-    
-</center>
-
-<div id="termBlock" class=" hidden fixed mt-0 bg-black bg-opacity-60 items-center justify-center z-50" style="top:120px;">
-  <div class="bg-sky-950 w-full max-w-2xl p-6 rounded-2xl relative text-white overflow-y-auto">
-    <h2 class="text-2xl font-bold mb-4">Terms & Conditions</h2>
-    <%- include('../terms/termCondition') %>
-    <div class="flex justify-center mb-5">
-    <button onclick="closeTerms()" class="absolute top-4 border-2 font-extrabold rounded-full" style="padding: 3px;">✖</button>
-    </div>
-  </div>
-</div>
-</div>
-
-  <script>
-function openTerms() {
-  const modal = document.getElementById('termBlock');
-  const mainBlock = document.getElementById('mainBlock');
-  mainBlock.classList.add('blur-lg');
-  modal.classList.remove('hidden');
-  mainBlock.style.pointerEvents = 'none';
-}
-
-function closeTerms() {
-  const modal = document.getElementById('termBlock');
-  const mainBlock = document.getElementById('mainBlock');
-  mainBlock.classList.remove('blur-lg');
-  modal.classList.add('hidden');
-  mainBlock.style.pointerEvents = '';
-}
-</script>
-
-</script>
-
-</body>
-
-</html>
+  </html>

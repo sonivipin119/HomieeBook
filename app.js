@@ -108,7 +108,7 @@ app.use((req, res, next) => {
 // Google OAuth Config
 const callbackURL =
   process.env.NODE_ENV === "production"
-    ? "https://your-project-name.vercel.app/auth/google/callback"
+    ? "https://homiee-book-9a2u.vercel.app/auth/google/callback"
     : "http://localhost:3005/auth/google/callback";
 
 passport.use(
