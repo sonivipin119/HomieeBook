@@ -22,13 +22,13 @@
         <div class="relative w-full">
           <!-- Background Image -->
           <img src="/images/front-home.jpg" class="w-full h-full object-cover" style="filter: blur(1.5px); height: 620px;">
-          <div class="absolute flex flex-col items-start justify-start top-0">
+          <div class="absolute flex flex-col items-start justify-start w-full top-0">
             <%- include('../partials/nav') %>
             <div class="flex flex-row mt-2 py-1 rounded-md p-6 " style="margin-left: 15px;">
               <div class="text-xl text-white font-bold tracking-wide" style="margin-right: 10px;">
                 Welcome!
               </div>
-              <div class="text-xl text-black font-bold">
+              <div class="text-xl text-black font-semibold">
                 <%= user && user.FirstName ? user.FirstName.toUpperCase() : '' %>
               </div>
             </div>
