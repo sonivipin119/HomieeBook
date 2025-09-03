@@ -3,19 +3,37 @@
   <head>
     <%- include('../partials/head') %> 
 
-    <!-- ✅ Custom page-specific CSS -->
     <style>
+      .notification {
+        display: none;             
+        position: fixed;           
+        top: 20px;                   
+        right: 20px;                 
+        background-color: #22c55e;  
+        color: white;               
+        padding: 0.5rem 1rem;      
+        border-radius: 0.5rem;     
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+        font-size: 1rem;
+        font-weight: 500;
+        transition: all 0.3s;
+      }
+
+      .notification.show {
+        display: block;
+      }
     </style>
   </head>
 
   <body class="bg-blue-100 font-sans min-h-screen flex flex-col">
-    <%- include('../partials/nav') %>
+    <div style="background-color: rgb(9, 66, 86);"><%- include('../partials/nav') %></div>
+
 
     <div class="content flex-1">
       <main class="container mx-auto p-8">
         
         <!-- Notification -->
-        <div class="notification" id="notification">
+        <div id="notification" class="notification">
           Message sent successfully! We'll get back to you soon.
         </div>
 
@@ -52,56 +70,35 @@
 
     <%- include('../partials/footerTile') %>
 
-    <!-- ✅ Scripts at bottom -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
-      document.getElementById('contactForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const form = e.target;
-        const formData = new FormData(form);
-
-        await fetch(form.action, {
-          method: form.method,
-          body: formData,
+      // Init EmailJS
+      (function() {
+        emailjs.init({
+          publicKey: "9dOmKc2D8Y54fky7K",
         });
+      })();
 
-        const notification = document.getElementById('notification');
-        notification.classList.add('show');
+      // Handle Form Submit
+      document.getElementById('contactForm').addEventListener('submit', function(event) {
+        event.preventDefault();
 
-        setTimeout(() => {
-          notification.classList.remove('show');
-        }, 3000);
-
-        form.reset();
-      });
-    </script>
-    <!-- sending email -->
-    <script
-      type="text/javascript"
-      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-    </script>
-    <script type="text/javascript">
-        (function() {
-            // https://dashboard.emailjs.com/admin/account
-            emailjs.init({
-              publicKey: "9dOmKc2D8Y54fky7K",
-            });
-        })();
-    </script>
-    <script type="text/javascript">
-      window.onload = function() {
-        document.getElementById('contactForm').addEventListener('submit', function(event) {
-          event.preventDefault();
-          // these IDs from the previous steps
-          emailjs.sendForm('service_7rrhsbq', 'template_yfm5g0b', this)
+        emailjs.sendForm('service_7rrhsbq', 'template_yfm5g0b', this)
           .then(() => {
-              console.log('SUCCESS!');
-              window.location.reload();
+            console.log('SUCCESS!');
+            const notification = document.getElementById('notification');
+            notification.classList.add('show');
+
+            setTimeout(() => {
+              notification.classList.remove('show');
+            }, 5000);
+
+            this.reset();
           }, (error) => {
-              console.log('FAILED...', error);
+            console.log('FAILED...', error);
+            notification.textContent = "Failed to send message. Please try again.";
           });
-        });
-      }
+      });
     </script>
   </body>
 </html>

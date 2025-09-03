@@ -267,3 +267,9 @@ exports.getTerms = (req, res, next) => {
     pageTitle: "Terms and Conditions",
     currentPage: "terms",});
 }
+exports.aboutUs = (req, res, next) =>{
+  res.render("store/aboutUs",{
+    pageTitle: "About HomieeBook",
+    currentPage: "About Us",
+  });
+}

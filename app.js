@@ -160,13 +160,13 @@ app.use(error500);
 mongoose
   .connect(DB_PATH)
   .then(() => {
-    console.log("✅ Connected to MongoDB");
+    console.log("Connected to MongoDB");
     if (process.env.NODE_ENV !== "production") {
       app.listen(PORT, () =>
         console.log(`🚀 Server running at http://localhost:${PORT}`)
       );
     }
   })
-  .catch((err) => console.error("❌ MongoDB Connection Error:", err));
+  .catch((err) => console.error("MongoDB Connection Error:", err));
 
 module.exports = app;

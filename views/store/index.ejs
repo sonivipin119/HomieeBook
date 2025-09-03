@@ -7,12 +7,46 @@
     .home-card:hover {
       transform: translateY(-7px);
     }
+     @layer utilities {
+      .text-outline {
+        color: rgba(0, 0, 0, 0.65);
+        -webkit-text-stroke: 1.5px #bdb9b9;
+      }
+    }
 </style>
 <body class="bg-blue-100 font-sans min-h-screen flex flex-col">
-    <%- include('../partials/nav') %>
-    <main class="content container mx-auto p-8 ">
+    <main class="content  mx-auto ">
+      <section class="flex flex-col justify-between items-center">
+        <div class="relative w-full">
+          <img src="/images/front-home.jpg" class="w-full h-full object-cover" style="filter: blur(1.5px); height: 620px;">
+          <div class="absolute flex flex-col items-start justify-start top-0">
+            <%- include('../partials/nav') %>
+            <div class="flex flex-row mt-0 bg-white/70 py-1 rounded-md p-6 " style="margin-left: 15px;">
+              <div class="text-xl text-white font-bold tracking-wide" style="margin-right: 10px;">
+                Welcome To HomieeBook
+              </div>
+            </div>
+            <div class="text-outline text-9xl font-bold drop-shadow-lg mt-0" style="margin-left: 35px; font-size: 50px; letter-spacing: 8px;">
+              <span style="font-size: 70px; margin: 0;">D</span>iscover Your <br>Dream <b>Residence</b> .. <br>With Us
+            </div>
+            <div class=" py-16 px-8 md:px-20 md:text-left text-white p-5" style="margin-left: 15px;">
+              <h2 class="text-3xl md:text-4xl font-bold mb-6 text-black">
+                Unveil Your Perfect Home with Us –<br> Experience the HomieeBook of Luxury Living
+              </h2>
+              <p class=" leading-relaxed max-w-3xl mx-auto md:mx-0">
+                Whether you’re searching for a modern villa, a cozy apartment, or a spacious family house, 
+                we bring you the best properties tailored to your lifestyle. Let us help you find the perfect 
+                match that feels like home.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section Title -->
+      </section>
+      <section class="p-8">
       <h2 class="text-3xl text-sky-950 font-bold text-center mb-8">
-        Welcome to AirBnb Page
+        Welcome to Luxury Living 
       </h2>
       <ul class="grid grid-cols-0 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <% registerHome.forEach(home => { %>
@@ -40,6 +74,7 @@
         </li>
         <% }) %>
       </ul>
+      </section>
     </main>
     <%- include('../partials/footerTile') %>
     <script></script>

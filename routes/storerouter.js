@@ -15,4 +15,5 @@ storerouter.get("/bookings", storecontroller.getbookings);
 storerouter.post("/bookings", storecontroller.postbookings);
 storerouter.get("/privacy",storecontroller.getPolicy);
 storerouter.get("/termService",storecontroller.getTerms);
+storerouter.get("/aboutUs",storecontroller.aboutUs);
 module.exports = storerouter;

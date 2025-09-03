@@ -15,7 +15,7 @@
   </style>
 
   <body class="bg-blue-100 font-sans min-h-screen flex flex-col">
-    <%- include('../partials/nav') %>
+    <div style="background-color: rgb(9, 66, 86);"><%- include('../partials/nav') %></div>
       <main class="content container mx-auto p-8">
         <h2 class="text-3xl text-sky-950 font-bold text-center mb-8">
           <%= home.Home %>
@@ -49,10 +49,10 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div class="md:col-span-2">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-start">
+          <div class="md:col-span-2 flex flex-col gap-1">
             <!-- House Features -->
-            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8 flex-1">
               <h4 class="text-xl text-sky-800 font-semibold mb-4">House Features</h4>
               <ul class="grid grid-cols-2 gap-2">
                 <% Object.entries(home.houseFeatures).forEach(([key, value])=> { %>
@@ -68,7 +68,7 @@
             </div>
 
             <!-- Amenities -->
-            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8 flex-1">
               <h4 class="text-xl text-sky-800 font-semibold mb-4">Amenities</h4>
               <ul class="grid grid-cols-2 gap-2">
                 <% home.amenities.forEach(amenity=> { %>
@@ -81,7 +81,7 @@
             </div>
 
             <!-- Reviews -->
-            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8 flex-1">
               <h4 class="text-xl text-sky-800 font-semibold mb-4">Guest Reviews</h4>
               <% reviews.forEach(review=> { %>
                 <div class="mb-4">
@@ -102,7 +102,7 @@
           </div>
           <div>
             <!-- Host Information -->
-            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8 flex-1">
               <h4 class="text-xl text-sky-800 font-semibold mb-4">Host Information</h4>
               <p class="mb-2"><strong>Name:</strong>
                 <%= host.name %>
@@ -119,16 +119,16 @@
             </div>
 
             <!-- Availability Calendar -->
-            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-              <h4 class="text-xl text-sky-800 font-semibold mb-4">Availability</h4>
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8 flex-1">
+              <h4 class="text-xl text-sky-800 font-semibold mb-2">Availability</h4>
               <p class="text-sky-950 mb-2 pr-0">You can book for up to 2 months.</p>
-              <div class="m-0 w-50 h-100">
+              <div class="m-0">
                 <div id="calendar"></div>
               </div>
             </div>
           </div>
           <!-- Booking Form -->
-          <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+          <div class="bg-white rounded-lg shadow-md p-6 mb-8 flex flex-col justify-between">
             <h4 class="text-xl text-sky-800 font-semibold mb-4">Book this place</h4>
             <form action="/bookings" id = "bookingForm" method="POST">
               <span id = "ErrorInDate" class="text-red-700"></span>
@@ -161,6 +161,19 @@
                   Now</button>
               </div>
             </form>
+            <div class="mt-4 mb-4">
+              <p class="text-gray-600 font-bold text-sm mb-2">We accept</p>
+              <div class="flex flex-col items-center">
+                <div class="grid grid-cols-2 gap-6">
+                <img src="/images/visa.png" alt="Visa" class="h-16 w-16">
+                <img src="/images/paypal.png" alt="PayPal" class="h-16 w-16">
+                </div>
+                <div class="grid grid-cols-2 gap-6">
+                <img src="/images/credit-card.png" alt="MasterCard" class="h-16 w-16">
+                <img src="/images/paytm.png" alt="UPI" class="h-16 w-16">
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         </div>
