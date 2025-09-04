@@ -4,21 +4,37 @@ const Booking = require("../models/booking");
 const { check, validationResult } = require("express-validator");
 const booking = require("../models/booking");
 
-exports.getIndex = (req, res, next) => {
-  const user = req.user || req.session.user;
-  Homigister.find().then((registerHome) => {
+exports.getIndex = async (req, res, next) => {
+  try {
+    const user = req.user || req.session.user;
+    const Location = req.query.Location;
+    let results = [];
+    if (!Location || Location.trim() === "") {
+      results = await Homigister.find();
+    } else {
+      results = await Homigister.find({
+        Location: new RegExp(Location, "i"),
+      });
+    }
+
     res.render("store/index", {
-      registerHome: registerHome,
+      registerHome: results,     
       pageTitle: "HomieeBook",
       currentPage: "Index",
       isLoggedIn: req.isLoggedIn,
-      user: user,
+      user : user,
+      Location: Location || ""
     });
-  });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
 };
 
-exports.getHomes = (req, res, next) => {
+
+exports.getHomes = async(req, res, next) => {
   const user = req.user || req.session.user;
+  const results = await Homigister.find();
   Homigister.find().then((registerHome) => {
     res.render("store/homelist", {
       registerHome: registerHome,
@@ -86,16 +102,14 @@ exports.postRemovefromfavouritelist = async (req, res, next) => {
 exports.getHomeDetail = async (req, res, next) => {
   const user = req.user || req.session.user;
   const homeId = req.params.homeId;
-  const today = new Date();// Set to start of today
+  const today = new Date();
 
   const nextDate = new Date();
-  nextDate.setMonth(nextDate.getMonth() + 12); // 1 month lookahead
+  nextDate.setMonth(nextDate.getMonth() + 12); 
 
-  // Get only bookings for this home, sorted ASC
   const allBookings = await Booking.find({ houseId: homeId }).sort({
     checkInDate: 1,
   });
-
 
   // Filter out past bookings (checkout before today)
   const bookings = allBookings.filter((b) => new Date(b.checkOutDate) >= today);
@@ -129,9 +143,7 @@ exports.getHomeDetail = async (req, res, next) => {
       end: new Date(nextDate),
     });
   }
-  // console.log("Server Timezone Offset (minutes):", new Date().getTimezoneOffset());
 
-  // Format bookings for calendar (red)
   const formattedBookings = bookings.map((booking) => {
     const checkOutPlusOne = new Date(booking.checkOutDate);
     checkOutPlusOne.setDate(checkOutPlusOne.getDate() + 1);
@@ -146,8 +158,6 @@ exports.getHomeDetail = async (req, res, next) => {
       color: "red",
     };
   });
-  // console.log("availableRanges:", availableRanges);
-  // Format available ranges (green)
   const formattedAvailableRanges = availableRanges.map((range) => ({
     title: "Available",
     start: new Date(range.start).toISOString().split('T')[0],
@@ -273,3 +283,37 @@ exports.aboutUs = (req, res, next) =>{
     currentPage: "About Us",
   });
 }
+
+exports.SearchHome = async (req, res, next) => {
+  try {
+    const user = req.user || req.session.user;
+    if (!user || user.userType !== "guest") {
+      return res.redirect("/");
+    }
+
+    const Location = req.query.Location;
+    // console.log(Location);
+    let results=[];
+
+    if (!Location || Location.trim() === "") {
+      results = await Homigister.find();
+    } else {
+      // filter by location (case-insensitive, partial match also works)
+      results = await Homigister.find({
+        Location: new RegExp(Location, "i"),
+      });
+    }
+    // console.log(results);
+
+    res.render("store/homelist", {
+      registerHome: results,
+      pageTitle: "Home List",
+      currentPage: "Home",
+      isLoggedIn: req.isLoggedIn,
+      user: user,
+    });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};

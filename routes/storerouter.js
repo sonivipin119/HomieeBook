@@ -4,7 +4,8 @@ const storerouter = express.Router();
 const storecontroller= require("../controllers/store");
 
 storerouter.get("/",storecontroller.getIndex);
-storerouter.get("/homes",storecontroller.getHomes);
+// storerouter.get("/homes",storecontroller.getHomes);
+storerouter.get("/homes", storecontroller.SearchHome);
 storerouter.get("/favourite-list",storecontroller.getFavList);
 storerouter.get("/homes/:homeId",storecontroller.getHomeDetail);
 storerouter.post("/favourite-list",storecontroller.postaddtofavouritelist);
