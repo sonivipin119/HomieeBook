@@ -1,33 +1,45 @@
-# Homiee | Home Reservation System
- "**HomieeBook** is a **modern web application** designed to make book sharing, renting, and management simple and efficient."
- "It connects **guests (readers)** and **hosts (owners)**, creating a community-driven platform where users can **exchange books, manage collections, and explore** new reads easily."
- " "
- "This project is built to help users who struggle with finding affordable books or sharing their own books with others in a **secure, user-friendly environment**."
- 
----
- 
-# 🚀 Features
- "- 📖 **Browse & Search Books** – Explore a large collection of books by genre, author, or title."
- "- 👤 **Guest & Host Roles** – Guests can borrow/rent books, while hosts can upload/manage their collections."
- "- 🖼 **Upload Book Photos** – Hosts can showcase book covers and details for better visibility."
- "- 🔐 **User Authentication** – Secure login & signup system for safe access."
- "- 📊 **Dashboard** – Manage personal book collections, borrowed books, and requests."
- "- 📱 **Responsive Design** – Works seamlessly on desktop and mobile devices."
- "- ⚡ **Fast & Modern UI** – Clean design with smooth user experience."
- 
----
- 
-# 📸 Screenshots
+# 🏠 HomieeBook | Home Reservation System  
 
-![App Screenshot]()
-![App Screenshot]()
-![App Screenshot]()
-![App Screenshot]()
+**HomieeBook** is a **modern web application** designed to make **home reservation, renting, and management simple and efficient**.  
+
+It connects **guests (renters)** and **hosts (owners)**, creating a community-driven platform where users can **explore homes, book stays, and manage reservations** easily.  
+
+This project is built to help users who struggle with **finding affordable homes** or **managing their rental properties** in a secure, user-friendly environment.  
+
+---
+
+## 🌍 Live Demo  
+Check out the live version of HomieeBook here:  
+👉 [HomieeBook on Vercel](https://homiee-book-9a2u.vercel.app/)
+
+---
+## 🚀 Features  
+
+- 🏡 **Browse & Search Homes** – Explore available homes by location, type, or price range.  
+- 👤 **Guest & Host Roles** – Guests can book homes, while hosts can upload/manage their listings.  
+- 🖼 **Upload Home Photos** – Hosts can showcase property images and details for better visibility.  
+- 🔐 **User Authentication** – Secure login & signup system for safe access.  
+- 📊 **Dashboard** – Manage bookings, reservations, and property details.  
+- 📱 **Responsive Design** – Works seamlessly on desktop and mobile devices.  
+- ⚡ **Fast & Modern UI** – Clean design with smooth user experience.  
+
+---
+
+## 📸 Screenshots  
+
+![Homepage](https://github.com/sonivipin119/HomieeBook/blob/main/assets/Screenshot%202025-09-05%20100250.png)  
+![Dashboard](https://github.com/sonivipin119/HomieeBook/blob/main/assets/Screenshot%202025-09-05%20100324.png) 
+![SignUp/Login](https://github.com/sonivipin119/HomieeBook/blob/main/assets/Screenshot%202025-09-05%20100525.png)
+![Favourite](https://github.com/sonivipin119/HomieeBook/blob/main/assets/Screenshot%202025-09-05%20100558.png)
+![Bookings](https://github.com/sonivipin119/HomieeBook/blob/main/assets/Screenshot%202025-09-05%20100614.png)
+![Details](https://github.com/sonivipin119/HomieeBook/blob/main/assets/Screenshot%202025-09-05%20100649.png)
+![Deatils2](https://github.com/sonivipin119/HomieeBook/blob/main/assets/Screenshot%202025-09-05%20100701.png)
 
 ---
 
 # ⚙️ Installation
-"Follow these steps to set up HomieeBook locally:"
+
+Follow these steps to set up HomieeBook locally:
  Clone the repository:
  ```
  git clone https://github.com/sonivipin119/HomieeBook.git
@@ -61,39 +73,42 @@
  ```
 ---
 
-# 📖 Usage
-- ## Guest User
- - Browse books
- - Request/borrow from hosts
- - View borrowing history
-- ## Host User
- - Upload books with images & details
- - Manage availability
- - Approve/reject borrow requests.
+## 📖 Usage
+
+- 👤 Guest User
+ - Browse homes
+ - Filter/search by location & budget
+ - Request/book a home
+ - View booking history
+
+- 🏠 Host User
+ - Upload property details with images
+ - Manage availability & reservations
+ - Approve/reject booking requests
 
 ---
 
 ## 📑 Software Requirement Specification (SRS) – Summary  
 
 ### 🔹 Problem Statement  
-Many readers find it difficult to access books affordably or to share their own collections effectively.  
-There is a need for a **community-driven platform** that bridges this gap.  
+Many users face challenges in finding affordable and trusted homes, while property owners struggle to manage reservations efficiently.
+There is a need for a **community-driven platform** that bridges this gap.
 
 ---
 
 ### 🔹 Users  
 
-- **Guest (Reader):** Can browse, search, borrow, and interact with hosts.  
-- **Host (Book Owner):** Can upload, manage, and lend books.  
+- **Guest (Reader):** Can browse, search, and book homes..  
+- **Host (Book Owner):** Can upload, manage, and rent out homes.  
 
 ---
 
 ### 🔹 Flow of Application  
 
 1. **Signup/Login** as Guest or Host.  
-2. Guests **search for books** by categories.  
-3. Hosts **upload books** with cover images and details.  
-4. Guests **send requests** to borrow books.  
+2. Guests **search for homes** by location.  
+3. Hosts **upload property details** with images and availability
+4. Guests **send requests** to booking homes.  
 5. Hosts **approve/deny requests**.  
 6. Both parties manage their history via the **dashboard**.  
 
@@ -101,13 +116,13 @@ There is a need for a **community-driven platform** that bridges this gap.
 
 ## 📌 Tech Stack  
 
-- **Frontend:** Html 
+- **Frontend:** Html, Tailwind CSS
 - **Backend:** Node.js + Express.js  
 - **Database:** MongoDB  
 - **Authentication:** JWT / OAuth
 - **File Storage:** Cloudinary + Multer
 - **Email Service:** Email.js
-- **Hosting:** Vercel / Netlify / Heroku  
+- **Hosting:** Vercel / Netlify 
 
 ---
 
@@ -126,4 +141,4 @@ Contributions are welcome! 🎉
 
 👤 **Vipin Soni**  
 - GitHub: [@sonivipin119](https://github.com/sonivipin119)  
-- LinkedIn: [Your LinkedIn Profile](https://www.linkedin.com/)  
+- LinkedIn: [Your LinkedIn Profile](https://www.linkedin.com/in/vipin-soni-416a61257/)  
