@@ -91,6 +91,12 @@
           </div>
         </div>
       <% } %>
+      <%- include('../partials/pagination', { 
+        currentPage : currentPage,
+        currentPageNum: currentPageNum, 
+        totalPages: totalPages, 
+        Location: Location 
+      }) %>
     </section>
     </main>
 

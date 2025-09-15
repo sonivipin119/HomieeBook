@@ -1,0 +1,47 @@
+<%
+  let route = "";
+  if (currentPage === "Home") {
+    route = "homes";
+  } else if (currentPage === "index") {
+    route = "";
+  }
+  else if( currentPage === "Host-home"){
+   route = "host/homelistpage";
+  }
+%>
+
+
+<div class="pagination">
+  <!-- Always show Prev -->
+  <a href="/<%= route %>?Location=<%= Location %>&page=<%= currentPageNum > 1 ? currentPageNum - 1 : 1 %>&limit=8"
+     class="<%= currentPageNum === 1 ? 'disabled' : '' %>"><<<</a>
+
+  <% if (totalPages <= 3) { %>
+    <!-- If only 3 or less pages, show all -->
+    <% for (let i = 1; i <= totalPages; i++) { %>
+      <a href="/<%= route %>?Location=<%= Location %>&page=<%= i %>&limit=8"
+         class="<%= i === currentPageNum ? 'active' : '' %>"><%= i %></a>
+    <% } %>
+  <% } else { %>
+    <!-- First page -->
+    <a href="/<%= route %>?Location=<%= Location %>&page=1&limit=8"
+       class="<%= currentPageNum === 1 ? 'active' : '' %>">1</a>
+
+    <!-- Second page -->
+    <a href="/<%= route %>?Location=<%= Location %>&page=2&limit=8"
+       class="<%= currentPageNum === 2 ? 'active' : '' %>">2</a>
+
+    <!-- Show dots only if we are not already near the last page -->
+    <% if (currentPageNum < totalPages - 1) { %>
+      <span class="dots">...</span>
+    <% } %>
+
+    <!-- Last page -->
+    <a href="/<%= route %>?Location=<%= Location %>&page=<%= totalPages %>&limit=8"
+       class="<%= currentPageNum === totalPages ? 'active' : '' %>"><%= totalPages %></a>
+  <% } %>
+
+  <!-- Always show Next -->
+  <a href="/<%= route %>?Location=<%= Location %>&page=<%= currentPageNum < totalPages ? currentPageNum + 1 : totalPages %>&limit=8"
+     class="<%= currentPageNum === totalPages ? 'disabled' : '' %>">>>></a>
+</div>

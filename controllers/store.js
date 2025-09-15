@@ -7,23 +7,36 @@ const booking = require("../models/booking");
 exports.getIndex = async (req, res, next) => {
   try {
     const user = req.user || req.session.user;
-    const Location = req.query.Location;
-    let results = [];
-    if (!Location || Location.trim() === "") {
-      results = await Homigister.find();
-    } else {
-      results = await Homigister.find({
-        Location: new RegExp(Location, "i"),
-      });
+
+    // Query params
+    const Location = req.query.Location || "";
+    const page = parseInt(req.query.page)  || 1;   // current page
+    const limit = parseInt(req.query.limit)  || 8; // items per page
+
+    //  Build query filter
+    let filter = {};
+    if (Location.trim() !== "") {
+      filter.Location = new RegExp(Location, "i"); // case-insensitive search
     }
 
+    //  Fetch paginated data
+    const results = await Homigister.find(filter)
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    //  Get total count (for pagination UI)
+    const totalHomes = await Homigister.countDocuments(filter);
+
     res.render("store/index", {
-      registerHome: results,     
+      registerHome: results,
       pageTitle: "HomieeBook",
       currentPage: "Index",
       isLoggedIn: req.isLoggedIn,
-      user : user,
-      Location: Location || ""
+      user: user,
+      Location: Location,
+      currentPageNum: page,                  // send page number
+      totalPages: Math.ceil(totalHomes / limit), // send total pages
+      totalHomes: totalHomes
     });
   } catch (err) {
     console.error(err);
@@ -31,19 +44,39 @@ exports.getIndex = async (req, res, next) => {
   }
 };
 
+exports.getHomes = async (req, res, next) => {
+  try {
+    const user = req.user || req.session.user;
+    const Location = req.query.Location || "";
+    const page = parseInt(req.query.page)  || 1;  
+    const limit = parseInt(req.query.limit)  || 8; 
+    
+    let filter = {};
+    if (Location.trim() !== "") {
+      filter.Location = new RegExp(Location, "i"); 
+    }
 
-exports.getHomes = async(req, res, next) => {
-  const user = req.user || req.session.user;
-  const results = await Homigister.find();
-  Homigister.find().then((registerHome) => {
+    const results = await Homigister.find(filter)
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    const totalHomes = await Homigister.countDocuments(filter);
+
     res.render("store/homelist", {
-      registerHome: registerHome,
+      registerHome: results,
       pageTitle: "Home List",
       currentPage: "Home",
       isLoggedIn: req.isLoggedIn,
       user: user,
+      Location: Location,
+      currentPageNum: page,                  
+      totalPages: Math.ceil(totalHomes / limit), 
+      totalHomes: totalHomes
     });
-  });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
 };
 
 exports.getFavList = async (req, res, next) => {
@@ -284,36 +317,36 @@ exports.aboutUs = (req, res, next) =>{
   });
 }
 
-exports.SearchHome = async (req, res, next) => {
-  try {
-    const user = req.user || req.session.user;
-    if (!user || user.userType !== "guest") {
-      return res.redirect("/");
-    }
+// exports.SearchHome = async (req, res, next) => {
+//   try {
+//     const user = req.user || req.session.user;
+//     if (!user || user.userType !== "guest") {
+//       return res.redirect("/");
+//     }
 
-    const Location = req.query.Location;
-    // console.log(Location);
-    let results=[];
+//     const Location = req.query.Location;
+//     // console.log(Location);
+//     let results=[];
 
-    if (!Location || Location.trim() === "") {
-      results = await Homigister.find();
-    } else {
-      // filter by location (case-insensitive, partial match also works)
-      results = await Homigister.find({
-        Location: new RegExp(Location, "i"),
-      });
-    }
-    // console.log(results);
+//     if (!Location || Location.trim() === "") {
+//       results = await Homigister.find();
+//     } else {
+//       // filter by location (case-insensitive, partial match also works)
+//       results = await Homigister.find({
+//         Location: new RegExp(Location, "i"),
+//       });
+//     }
+//     // console.log(results);
 
-    res.render("store/homelist", {
-      registerHome: results,
-      pageTitle: "Home List",
-      currentPage: "Home",
-      isLoggedIn: req.isLoggedIn,
-      user: user,
-    });
-  } catch (err) {
-    console.error(err);
-    next(err);
-  }
-};
+//     res.render("store/homelist", {
+//       registerHome: results,
+//       pageTitle: "Home List",
+//       currentPage: "Home",
+//       isLoggedIn: req.isLoggedIn,
+//       user: user,
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     next(err);
+//   }
+// };

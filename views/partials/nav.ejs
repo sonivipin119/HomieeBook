@@ -2,12 +2,27 @@
   <nav class="container mx-auto px-4 py-6 flex items-center justify-between">
     <!-- Left Brand and Menu Items -->
     <div class="flex items-center">
-      
-      <div class="mr-9">
-        <a href="/" class="text-xl font-bold tracking-wide text-white hover:text-blue-300 transition">
-          HomieeBook
-        </a>
-      </div>
+      <% if(isLoggedIn) { %>
+        <% if(user && user.userType === 'guest') {%>
+          <div class="mr-9">
+            <a href="/homes" class="text-xl font-bold tracking-wide text-white hover:text-blue-300 transition">
+              HomieeBook 
+            </a>
+          </div>
+        <% } else if(user && user.userType === 'host') {%>
+          <div class="mr-9">
+            <a href="/host/homelistpage" class="text-xl font-bold tracking-wide text-white hover:text-blue-300 transition">
+              HomieeBook 
+            </a>
+          </div>
+        <% } %>
+      <% } else { %>
+        <div class="mr-9">
+          <a href="/" class="text-xl font-bold tracking-wide text-white hover:text-blue-300 transition">
+            HomieeBook
+          </a>
+        </div>
+      <% } %>
 
       <!-- Left Menu Items -->
       <ul class="flex space-x-3 text-sm font-medium items-center">
@@ -89,10 +104,23 @@
           </a>
         </li>
       <% } else { %>
-        <% if(currentPage ==='Home' || currentPage==='Index'){ %>
+        <% if(currentPage==="Home" || currentPage==="Host-home" || currentPage === "Index"){ %>
+        <%
+          let routes = "";
+          let bgColor = "";
+          if (currentPage === "Home") {
+            routes = "homes";
+          } else if (currentPage === "Host-home") {
+            routes = "host/homelistpage";
+            bgColor = "white";
+          }
+          else if(currentPage === 'Index'){
+            routes = "";
+          }
+        %>
         <li>
-          <form action="/homes" method="GET" id="citySearchForm" style="display: flex; align-items: center; gap: 10px; margin-right: 100px;">
-            <div class="flex border-2 rounded-md border-white pl-3 items-center" style="width: 250px; height: 40px; border-radius: 30px;">
+          <form action="/<%= routes %>" method="GET" id="citySearchForm" style="display: flex; align-items: center; gap: 10px; margin-right: 100px;">
+            <div class="flex border-2 rounded-md border-white pl-3 items-center" style="width: 250px; height: 40px; border-radius: 30px; background-color: <%= bgColor %>;">
               <input 
                 type="text" 
                 name="Location" 

@@ -31,16 +31,40 @@ exports.getedithome = (req, res, next) => {
   });
 };
 
-exports.getHostHomes = (req, res, next) => {
-  Homigister.find().then((registerHome) => {
+exports.getHostHomes = async(req, res, next) => {
+  try{
+    const user = req.session.user || req.user;
+    const Location = req.query.Location || '';
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 8;
+
+    let filter = {};
+    if (Location.trim() !== "") {
+      filter.Location = new RegExp(Location, "i");
+    }
+
+    const results = await Homigister.find(filter)
+      .skip((page - 1) * limit)
+      .limit(limit);
+    
+    const totalHomes = await Homigister.countDocuments(filter);
+
     res.render("host/homelistpage", {
-      registerHome: registerHome,
+      registerHome: results,
       pageTitle: "Host Home List",
       currentPage: "Host-home",
       isLoggedIn: req.isLoggedIn,
-      user: req.session.user,
+      user: user,
+      Location: Location,
+      currentPageNum: page,                  
+      totalPages: Math.ceil(totalHomes / limit),
+      totalHomes: totalHomes
     });
-  });
+  }
+  catch(err){
+    console.log(err);
+    next(err);
+  }
 };
 
 exports.postAddhome = async (req, res, next) => {
