@@ -2,7 +2,6 @@ const express = require("express");
 const authRouter = express.Router();
 const passport = require("passport");
 const authcontroller= require("../controllers/auth");
-
 authRouter.get("/Login",authcontroller.getLogin);
 authRouter.post("/Login", authcontroller.postLogin);
 // authRouter.post("/logout", authcontroller.postLogout);

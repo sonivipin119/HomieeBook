@@ -3,8 +3,6 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const secretKey = process.env.JWT_SECRET_KEY || "Jwt_secret_key_here";
 const bcrypt = require('bcryptjs');
-const oauthVerify = require("../middleware/Oauthverify");
-const { generateToken } = require("../utils/jwt");
 exports.getLogin = (req, res, next) => {
   res.render("auth/loginpage",
     {pageTitle:"Login",
@@ -129,7 +127,6 @@ exports.postsignUp = [
   }
 
 ];
-
 exports.postLogin = async(req, res, next) => {
   const {UserName, email, password} = req.body;
   const normalizedEmail = email.toLowerCase();
@@ -155,10 +152,7 @@ exports.postLogin = async(req, res, next) => {
       user : {},
     })
   }
-  const token = generateToken(user);
-  res.cookie('token', token, { httpOnly: true});
-  console.log("Cookie set");
-
+  
   req.session.isLoggedIn = true;
   req.session.user = user;
   await req.session.save();
@@ -170,7 +164,23 @@ exports.postLogin = async(req, res, next) => {
 }
 exports.SocialLoginVerify = async (accessToken, refreshToken, profile, done) => {
   try {
-    const user = await oauthVerify(profile);
+    const email = profile.emails?.[0]?.value;
+    const displayName = profile.displayName || '';
+    const [FirstName = '', ...rest] = displayName.split(' ');
+    const LastName = rest.join(' ') || '';
+    let user = await User.findOne({ email });
+    if (!user) {
+      user = new User({
+        FirstName,
+        LastName,
+        UserName: email.split('@')[0],
+        email,
+        password: "GOOGLE_LOGIN",
+        isSocialLogin: true,
+        userType: "guest",
+      });
+      await user.save();
+    }
     return done(null, user);
   } catch (err) {
     return done(err, null);
@@ -178,16 +188,9 @@ exports.SocialLoginVerify = async (accessToken, refreshToken, profile, done) => 
 };
 // In controllers/auth.js
 exports.SocialLoginSession = async (req, res, next) => {
-
   try {
     if (!req.user) return res.redirect("/Login");
     const user = req.user;
-    console.log("Generating JWT...");
-    const token = generateToken(user);
-    console.log("JWT:", token);
-    res.cookie('token', token, { httpOnly: true});
-    console.log("Cookie set");
-
     req.session.isLoggedIn = true;
     req.session.user = user;
     await req.session.save();
@@ -217,8 +220,40 @@ exports.postLogout = (req, res, next) => {
     
     // Clear the session cookie
     res.clearCookie('connect.sid');
-    res.clearCookie("token");
+    
     // Redirect to login page
     res.redirect("/Login");
   });
 }
+/*try {
+        const user = req.user || req.session.user;
+        const Location = req.query.Location || "";
+        const page = parseInt(req.query.page)  || 1;  
+        const limit = parseInt(req.query.limit)  || 8; 
+        console.log("Location:", Location);
+        let filter = {};
+        if (Location.trim() !== "") {
+          filter.Location = new RegExp(Location, "i"); 
+        }
+    
+        const results = await Homigister.find(filter)
+          .skip((page - 1) * limit)
+          .limit(limit);
+    
+        const totalHomes = await Homigister.countDocuments(filter);
+        
+        res.render("store/homelist", {
+          registerHome: results,
+          pageTitle: "Home List",
+          currentPage: "Home",
+          isLoggedIn: req.isLoggedIn,
+          user: user,
+          Location: Location,
+          currentPageNum: page,                  
+          totalPages: Math.ceil(totalHomes / limit), 
+          totalHomes: totalHomes
+        });
+      } catch (err) {
+        console.error(err);
+        next(err);
+      } */

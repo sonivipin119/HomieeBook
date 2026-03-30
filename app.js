@@ -17,7 +17,11 @@ const storerouter = require("./routes/storerouter");
 const hostrouter = require("./routes/hostrouter");
 const authrouter = require("./routes/authrouter");
 const { error404, error500 } = require("./controllers/error");
+const verifyJWT = require("./middleware/JWTverify");
+
 const User = require("./models/user");
+const { cookie } = require("express-validator");
+const cookieParser = require("cookie-parser");
 
 // Env Vars
 const DB_PATH = process.env.DB_PATH;
@@ -31,7 +35,7 @@ app.set("views", path.join(__dirname, "views"));
 
 // Serve Static Files
 app.use(express.static(path.join(__dirname, "public"))); // Only one static folder
-
+app.use(cookieParser());
 // Helmet + CSP
 app.use(
   helmet({
