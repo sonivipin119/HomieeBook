@@ -103,9 +103,10 @@ exports.getbookings = async (req, res, next) => {
     const bookings = await Booking.find({ userId: user._id })
       .populate("houseId")
       .sort({ createdAt: -1 });
-
+    const validBookings = bookings.filter(b => b.houseId);
+    // console.log(bookings);
     res.render("store/bookings", {
-      bookings: bookings,
+      bookings: validBookings,
       pageTitle: "My Bookings",
       currentPage: "bookings",
       isLoggedIn: req.isLoggedIn,

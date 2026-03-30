@@ -50,13 +50,14 @@
 
         <!-- Section Title -->
       </section>
-      <section class="p-8">
+      <section id="homes-section" class="p-8">
         <h2 class="text-3xl text-center text-sky-950 font-bold mb-6">
           Available Homes
         </h2>
       <% if (registerHome && registerHome.length > 0) { %>
       <ul class="grid grid-cols-0 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <% registerHome.forEach(home => { %>
+        
         <li class=" home-card rounded-lg shadow-md overflow-hidden transition duration-300 hover:shadow-lg">
           <div class="relative h-48 overflow-hidden">
             <img src="<%= home.photo.url%>" alt="<%= home.Home %>" class="w-full h-full object-cover">
@@ -94,6 +95,7 @@
           </div>
         </div>
       <% } %>
+
       <%- include('../partials/pagination', { 
         currentPage : currentPage,
         currentPageNum: currentPageNum, 
@@ -105,6 +107,14 @@
 
     <%- include('../partials/footerTile') %>
     <script src = "/js/bottonfav.js"></script>
-    
+    <script>
+      const params = new URLSearchParams(window.location.search);
+
+      if (params.get("Location")) {
+        document.getElementById("homes-section")?.scrollIntoView({
+          behavior: "smooth"
+        });
+      }
+    </script>
   </body>
 </html>
