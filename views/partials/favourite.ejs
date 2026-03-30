@@ -1,6 +1,12 @@
 <form action="/favourite-list" method="POST">
-  <button id="likeButton" class="text-gray-500 text-xl transition duration-300">
-    <i id="heartIcon" class="far fa-heart"></i>
+  <button class="likeButton text-gray-500 text-xl transition duration-300">
+    <% if (favourites.includes(home._id.toString())) { %>
+      <i class="heartIcon fas fa-heart text-red-500"></i>  
+    <% } else { %>
+      <i class="heartIcon far fa-heart"></i> 
+    <% } %>
+
   </button>
-  <input type="hidden" name="homeId" value="<%= home._id%>"/>
+
+  <input type="hidden" name="homeId" value="<%= home._id %>"/>
 </form>

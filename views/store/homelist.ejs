@@ -64,7 +64,10 @@
           <div class="p-6">
             <div class="flex justify-between items-start">
               <h3 class="text-xl text-sky-800 font-semibold mb-2"><%=home.Home%></h3>
-              <%- include('../partials/favourite',{home : home}) %>
+              <%- include('../partials/favourite', { 
+                home: home, 
+                favourites:favourites || [] 
+              }) %>
               
             </div>
             <p class="text-gray-600 mb-4"><%= home.Location %></p>
@@ -101,7 +104,7 @@
     </main>
 
     <%- include('../partials/footerTile') %>
-    <script src = "../partials/bottonfav.js"></script>
+    <script src = "/js/bottonfav.js"></script>
     
   </body>
 </html>

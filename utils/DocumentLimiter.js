@@ -1,3 +1,4 @@
+console.log("DocumentLimiter Loaded");
 const User = require("../models/user");
 const Homigister = require("../models/home");
 
@@ -23,7 +24,16 @@ try {
 
     //  Get total count (for pagination UI)
     const totalHomes = await Homigister.countDocuments(filter);
+    let favourites = []; 
 
+    if (user) {
+      const dbUser = await User.findById(user._id);
+      favourites = dbUser?.favourites?.map(id => id.toString()) || [];
+    }
+    console.log("favourites in Limiter:", favourites);
+    if(path === "store/index"){
+      favourites = []; 
+    }
     res.render(path, {
       registerHome: results,
       pageTitle: title,
@@ -33,7 +43,8 @@ try {
       Location: Location,
       currentPageNum: page,                  // send page number
       totalPages: Math.ceil(totalHomes / limit), // send total pages
-      totalHomes: totalHomes
+      totalHomes: totalHomes,
+      favourites: favourites 
     }); 
   } catch (err) {
     console.error(err);
