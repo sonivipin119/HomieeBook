@@ -227,7 +227,17 @@
       <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
       <script src="/js/paymentHandler.js"></script>
       <script>
-        document.getElementById("bookNowButton").addEventListener("click", handlePayment);
+        console.log("Home price from server:", <%= home.Price %>);
+    document.getElementById("bookNowButton").addEventListener("click", (e) =>{
+      e.preventDefault();
+      const totalPrice = document.getElementById("totalPrice").value;
+      const checkInDate = document.getElementById("checkInDate").value;
+      const checkOutDate = document.getElementById("checkOutDate").value; 
+      const guests = document.getElementById("numberOfGuests").value;
+      const houseId = "<%= home._id %>";
+      handlePayment(houseId, checkInDate, checkOutDate, totalPrice, guests);
+    } );
+
       </script>
   </body>
 

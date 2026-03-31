@@ -1,12 +1,17 @@
-const handlePayment = async (e) => {
-  e.preventDefault(); // ✅ prevents form reload (VERY IMPORTANT)
 
+const handlePayment = async (houseId, checkInDate, checkOutDate, price, guests) => {
   try {
     console.log("Payment button clicked");
 
     // 1. Create order
     const res = await fetch("/api/payment/create-order", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        totalPrice: price   // 🔥 THIS IS REQUIRED
+      })
     });
     console.log("Create order response:", res);
     if (!res.ok) {
@@ -15,31 +20,16 @@ const handlePayment = async (e) => {
 
     const order = await res.json();
     console.log("Order:", order);
-
+    
     // 2. Razorpay options
     const options = {
       key: "rzp_test_SXv617L4CmXnjq", // 🔑 replace with your key
-      amount: order.amount,
+      amount: order.amount, // Convert to paise
       currency: "INR",
       order_id: order.id,
       method: {
         upi: true,
         card: true
-      },
-      config: {
-        display: {
-          blocks: {
-            upi: {
-              name: "Pay using UPI",
-              instruments: [{ method: "upi" }]
-            }
-            
-          },
-          sequence: ["block.upi"],
-          preferences: {
-            show_default_blocks: true
-          }
-        }
       },
       name: "Homieebook",
       description: "Premium Purchase",
@@ -52,7 +42,14 @@ const handlePayment = async (e) => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(response),
+          body: JSON.stringify({
+          ...response,
+          houseId: houseId,
+          checkInDate: checkInDate,
+          checkOutDate: checkOutDate,
+          totalPrice: price,
+          numberOfGuests: guests
+        }),
         });
 
         const data = await verifyRes.json();
