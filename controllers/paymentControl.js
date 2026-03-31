@@ -9,16 +9,22 @@ const razorpay = new Razorpay({
 // ✅ Create Order
 exports.createOrder = async (req, res) => {
   try {
+    // ✅ ADD THIS CHECK
+    if (!req.session.isLoggedIn) {
+      return res.status(401).json({ message: "Please login first" });
+    }
+
     const options = {
-      amount: 50000, // ₹500 in paise
+      amount: 50000,
       currency: "INR",
       receipt: "receipt_" + Date.now(),
     };
 
     const order = await razorpay.orders.create(options);
     res.json(order);
+
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).json({ error: err.message });
   }
 };
 

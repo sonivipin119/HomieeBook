@@ -164,7 +164,7 @@
               <input type="hidden" id="pricePerNight" value="<%= home.Price %>">
             </div>
             <div>
-              <button type="submit" id="bookNowButton"
+              <button type="button" id="bookNowButton" 
                 class="w-full bg-sky-500 text-white py-2 px-4 rounded-md hover:bg-sky-600 transition duration-300">Book
                 Now</button>
             </div>
@@ -211,9 +211,8 @@
             ]
           });
         calendar.render();
-  }
-});
-
+          }
+        });
       </script>
 
       <!-- Booking Calculation Script -->
@@ -225,7 +224,11 @@
       <script>
         document.addEventListener('DOMContentLoaded', initBookingCalculation);
       </script>
-      
+      <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+      <script src="/js/paymentHandler.js"></script>
+      <script>
+        document.getElementById("bookNowButton").addEventListener("click", handlePayment);
+      </script>
   </body>
 
 

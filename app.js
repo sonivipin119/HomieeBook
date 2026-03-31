@@ -42,12 +42,16 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
+
         scriptSrc: [
           "'self'",
           "'unsafe-inline'",
           "https://cdnjs.cloudflare.com",
-          "https://cdn.jsdelivr.net",
+          "https://cdn.jsdelivr.net", 
+          "https://*.razorpay.com", // ✅ ADD THIS
+          "https://checkout.razorpay.com",
         ],
+
         styleSrc: [
           "'self'",
           "'unsafe-inline'",
@@ -55,6 +59,7 @@ app.use(
           "https://fonts.googleapis.com",
           "https://cdn.jsdelivr.net",
         ],
+
         styleSrcElem: [
           "'self'",
           "'unsafe-inline'",
@@ -62,16 +67,35 @@ app.use(
           "https://fonts.googleapis.com",
           "https://cdn.jsdelivr.net",
         ],
-        imgSrc: ["'self'", "data:", "https://res.cloudinary.com"],
-        connectSrc: ["'self'", "https://api.emailjs.com"],
+
+        imgSrc: [
+          "'self'",
+          "data:",
+          "https://res.cloudinary.com",
+          "https://*.razorpay.com" // ✅ optional safe add
+        ],
+
+        connectSrc: [
+          "'self'",
+          "https://api.emailjs.com",
+          "https://api.razorpay.com",
+          "https://lumberjack.razorpay.com",
+          "https://*.razorpay.com"
+        ],
+
         fontSrc: [
           "'self'",
           "https://cdnjs.cloudflare.com",
           "https://fonts.googleapis.com",
           "data:",
         ],
+
         objectSrc: ["'none'"],
-        frameSrc: ["'none'"],
+
+        frameSrc: [
+          "'self'",
+          "https://*.razorpay.com" // ✅ ADD THIS
+        ],
       },
     },
   })
