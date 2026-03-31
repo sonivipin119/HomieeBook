@@ -139,7 +139,7 @@ passport.deserializeUser(async (id, done) => {
 // Routes
 app.use(authrouter);
 app.use(storerouter);
-
+app.use("/api/payment", require("./routes/paymentRoutes"));
 // Host routes with authentication
 app.use("/host", (req, res, next) => {
   if (req.isLoggedIn) {

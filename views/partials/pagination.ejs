@@ -28,6 +28,7 @@
        class="<%= currentPageNum === 1 ? 'active' : '' %>">1</a>
 
     <!-- Second page -->
+<<<<<<< HEAD
     <% if (currentPageNum < 3) { %>
       <a href="/<%= route %>?Location=<%= Location %>&page=2&limit=8"
         class="<%= currentPageNum === 2 ? 'active' : '' %>">2</a>
@@ -40,6 +41,11 @@
         class="<%= currentPageNum > 2 && currentPageNum < totalPages ? 'active' : '' %>"><%= currentPageNum===totalPages ? currentPageNum - 1 : currentPageNum %></a>
     <% } %>
     
+=======
+    <a href="/<%= route %>?Location=<%= Location %>&page=2&limit=8"
+       class="<%= currentPageNum === 2 ? 'active' : '' %>">2</a>
+
+>>>>>>> refs/remotes/origin/homieebook
     <!-- Show dots only if we are not already near the last page -->
     <% if (currentPageNum < totalPages - 1) { %>
       <span class="dots">...</span>
