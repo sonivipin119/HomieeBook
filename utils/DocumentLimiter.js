@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 console.log("DocumentLimiter Loaded");
-=======
->>>>>>> refs/remotes/origin/homieebook
 const User = require("../models/user");
 const Homigister = require("../models/home");
 
@@ -27,7 +24,6 @@ try {
 
     //  Get total count (for pagination UI)
     const totalHomes = await Homigister.countDocuments(filter);
-<<<<<<< HEAD
     let favourites = []; 
 
     if (user) {
@@ -38,9 +34,6 @@ try {
     if(path === "store/index"){
       favourites = []; 
     }
-=======
-
->>>>>>> refs/remotes/origin/homieebook
     res.render(path, {
       registerHome: results,
       pageTitle: title,
@@ -50,12 +43,8 @@ try {
       Location: Location,
       currentPageNum: page,                  // send page number
       totalPages: Math.ceil(totalHomes / limit), // send total pages
-<<<<<<< HEAD
       totalHomes: totalHomes,
       favourites: favourites 
-=======
-      totalHomes: totalHomes
->>>>>>> refs/remotes/origin/homieebook
     }); 
   } catch (err) {
     console.error(err);

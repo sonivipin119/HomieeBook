@@ -219,7 +219,7 @@
       <!-- Booking Calculation Script -->
       <script>
         // Expose bookings ranges to client-side JS
-        window.availableRanges = <% - JSON.stringify(availableRanges || []) %>;
+        window.availableRanges = <%- JSON.stringify(availableRanges || []) %>;
       </script>
       <script src="/js/booking-calculation.js"></script>
       <script>
