@@ -33,6 +33,7 @@ const handlePayment = async (e) => {
               name: "Pay using UPI",
               instruments: [{ method: "upi" }]
             }
+            
           },
           sequence: ["block.upi"],
           preferences: {
