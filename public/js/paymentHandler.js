@@ -10,7 +10,7 @@ const handlePayment = async (houseId, checkInDate, checkOutDate, price, guests) 
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        totalPrice: price   // 🔥 THIS IS REQUIRED
+        totalPrice: price  
       })
     });
     console.log("Create order response:", res);
@@ -23,7 +23,7 @@ const handlePayment = async (houseId, checkInDate, checkOutDate, price, guests) 
     
     // 2. Razorpay options
     const options = {
-      key: "rzp_test_SXv617L4CmXnjq", // 🔑 replace with your key
+      key: "rzp_test_SXv617L4CmXnjq",
       amount: order.amount, // Convert to paise
       currency: "INR",
       order_id: order.id,
@@ -55,10 +55,10 @@ const handlePayment = async (houseId, checkInDate, checkOutDate, price, guests) 
         const data = await verifyRes.json();
 
         if (data.success) {
-          alert("Thank you for payment 🎉");
+          alert("Thank you for payment");
           window.location.href = "/";
         } else {
-          alert("Payment verification failed ❌");
+          alert("Payment verification failed ");
         }
       },
 
@@ -79,6 +79,6 @@ const handlePayment = async (houseId, checkInDate, checkOutDate, price, guests) 
 
   } catch (err) {
     console.error("Payment Error:", err);
-    alert("Something went wrong ❌");
+    alert("Something went wrong");
   }
 };

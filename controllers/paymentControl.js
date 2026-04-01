@@ -7,20 +7,17 @@ const razorpay = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
-
-// ========================
-// ✅ CREATE ORDER
-// ========================
+// CREATE ORDER
 exports.createOrder = async (req, res) => {
   try {
-    const { totalPrice } = req.body; // 🔥 get price from frontend
+    const { totalPrice } = req.body; 
 
     if (!totalPrice) {
       return res.status(400).json({ error: "Price is required" });
     }
 
     const options = {
-      amount: totalPrice * 100, // convert ₹ → paise
+      amount: totalPrice * 100,
       currency: "INR",
       receipt: "receipt_" + Date.now(),
     };
@@ -36,17 +33,13 @@ exports.createOrder = async (req, res) => {
 };
 
 
-// ========================
-// ✅ VERIFY PAYMENT + SAVE BOOKING
-// ========================
+// VERIFY PAYMENT + SAVE BOOKING
 exports.verifyPayment = async (req, res) => {
   try {
     const {
       razorpay_order_id,
       razorpay_payment_id,
       razorpay_signature,
-
-      // 🔥 booking data
       houseId,
       checkInDate,
       checkOutDate,
@@ -54,7 +47,7 @@ exports.verifyPayment = async (req, res) => {
       numberOfGuests
     } = req.body;
 
-    // 🔐 verify signature
+    // verify signature
     const body = razorpay_order_id + "|" + razorpay_payment_id;
 
     const expectedSignature = crypto
@@ -66,14 +59,12 @@ exports.verifyPayment = async (req, res) => {
       return res.status(400).json({ success: false, message: "Invalid payment" });
     }
 
-    // 🔥 ensure user exists
+    // ensure user exists
     if (!req.session.user) {
       return res.status(401).json({ message: "Please login first" });
     }
 
-    // ========================
-    // ✅ SAVE BOOKING
-    // ========================
+    // SAVE BOOKING
     const booking = await Booking.create({
       houseId,
       userId: req.session.user._id,
