@@ -56,7 +56,7 @@ const handlePayment = async (houseId, checkInDate, checkOutDate, price, guests) 
 
         if (data.success) {
           alert("Thank you for payment");
-          window.location.href = "/";
+          window.location.href = "/bookings";
         } else {
           alert("Payment verification failed ");
         }

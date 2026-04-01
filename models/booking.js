@@ -1,6 +1,14 @@
 const mongoose = require('mongoose');
 
 const BookingSchema = mongoose.Schema({
+  orderId: {
+    type: String,
+    required: true,
+  },
+  paymentId: {
+    type: String,
+    required: true,
+  },
   houseId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Homigister',

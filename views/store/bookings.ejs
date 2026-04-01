@@ -20,9 +20,24 @@
             <% if (booking.houseId) { %> 
             <div class="booking-card bg-white rounded-lg shadow-md p-6">
               <h3 class="text-xl font-semibold text-gray-800 mb-2"><%= booking.houseId.Home %></h3>
-              <p class="text-gray-600 mb-4"><%= booking.houseId.Location %></p>
-              
-              <div class="space-y-2 mb-4">
+              <p class="text-gray-600 mb-2"><%= booking.houseId.Location %></p>
+              <hr>
+              <div class="space-y-1 mt-1 mb-2">
+                <div class="flex justify-between">
+                  <span class="text-gray-600">Order ID:</span>
+                  <span class="font-medium text-gray-700"><%= booking.orderId %></span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-600">Payment ID:</span>
+                  <span class="font-medium text-gray-700"><%= booking.paymentId %></span>
+                </div>
+              </div>
+              <div class="flex flex-row justify-between">
+                <span></span>
+                <span style="height: 2px; background-color: #000000a1; width: 146px;"></span>
+                <span></span>
+              </div>
+              <div class="space-y-1 mt-1 mb-4">
                 <div class="flex justify-between">
                   <span class="text-gray-600">Check-in:</span>
                   <span class="font-medium"><%= new Date(booking.checkInDate).toLocaleDateString() %></span>

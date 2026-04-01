@@ -36,6 +36,7 @@ exports.createOrder = async (req, res) => {
 // VERIFY PAYMENT + SAVE BOOKING
 exports.verifyPayment = async (req, res) => {
   try {
+    console.log("Verify Payment Request Body:", req.body);
     const {
       razorpay_order_id,
       razorpay_payment_id,
@@ -48,8 +49,12 @@ exports.verifyPayment = async (req, res) => {
     } = req.body;
 
     // verify signature
+    if (!razorpay_order_id || !razorpay_payment_id) {
+      console.log("❌ Missing payment IDs");
+      return res.status(400).json({ success: false });
+    }
     const body = razorpay_order_id + "|" + razorpay_payment_id;
-
+    console.log("Verifying payment with body:", body, "and signature:", razorpay_signature);
     const expectedSignature = crypto
       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
       .update(body)
@@ -63,16 +68,18 @@ exports.verifyPayment = async (req, res) => {
     if (!req.session.user) {
       return res.status(401).json({ message: "Please login first" });
     }
-
+    console.log("Order ID", razorpay_order_id, "Payment ID:", razorpay_payment_id, "Signature:", razorpay_signature);
     // SAVE BOOKING
     const booking = await Booking.create({
+      orderId: razorpay_order_id.replace("order_", "") || "N/A",
+      paymentId: razorpay_payment_id.replace("pay_", "") || "N/A",
       houseId,
       userId: req.session.user._id,
       checkInDate,
       checkOutDate,
       totalPrice,
       numberOfGuests,
-      status: "confirmed"
+      status: "confirmed",
     });
 
     console.log("Booking saved:", booking);

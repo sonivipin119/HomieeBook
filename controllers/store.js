@@ -129,10 +129,12 @@ exports.postbookings = async (req, res, next) => {
       return res.redirect("/");
     }
 
-    const { homeId, checkInDate, checkOutDate, numberOfGuests, totalPrice } =
+    const { orderId, paymentId, homeId, checkInDate, checkOutDate, numberOfGuests, totalPrice } =
       req.body;
 
     const bookingData = {
+      orderId,
+      paymentId,
       houseId: homeId,
       userId: user._id,
       checkInDate: new Date(checkInDate),
